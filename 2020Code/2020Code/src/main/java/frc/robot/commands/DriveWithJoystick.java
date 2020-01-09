@@ -11,6 +11,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import java.math.*;
 
 /**
  * An example command that uses an example subsystem.
@@ -50,7 +51,8 @@ public class DriveWithJoystick extends CommandBase {
     else speed = speed * 0.85 + 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);
     //Only move if allowed to.
     if (frc.robot.RobotContainer.DriveTrain.isDrivingAllowed() == true) {
-        frc.robot.RobotContainer.DriveTrain.arcadeDrive(speed, rotation);
+        if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) > 0.1) frc.robot.RobotContainer.DriveTrain.arcadeDrive(-speed, -rotation);
+        if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) < 0.1) frc.robot.RobotContainer.DriveTrain.arcadeDrive(speed, rotation);
     }
   }
 

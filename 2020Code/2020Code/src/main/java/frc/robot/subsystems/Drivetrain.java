@@ -92,7 +92,6 @@ public class Drivetrain extends SubsystemBase {
     diffDrive.setSafetyEnabled(true);
     diffDrive.setExpiration(0.1);
     diffDrive.setMaxOutput(1.0);
-    //setDefaultCommand(new DriveWithJoystick());
   }
 
 
@@ -101,23 +100,6 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left Encoders", getLeftEncoders());
     SmartDashboard.putNumber("Right Encoders", getRightEncoders());
-
-    // double speed;
-    // double rotation;
-    // //Get joystick positions and set speed and rotation to them
-    // //Inputs below the inner bound are ignored
-    // speed = Math.abs(frc.robot.RobotContainer.m_driverController.getRawAxis(1)) >= innerBound ? frc.robot.RobotContainer.m_driverController.getRawAxis(1) : 0;
-    // rotation = Math.abs(frc.robot.RobotContainer.m_driverController.getRawAxis(4)) >= innerBound ? frc.robot.RobotContainer.m_driverController.getRawAxis(4) : 0;
-    // //Go into slow speed mode if left bumper is pressed, slow rotation mode if right bumper is pressed
-    // speed = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kLeft) ? speed * 0.5 : speed;
-    // rotation = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kRight) ? rotation * 0.5 : rotation;
-    // //Descrease speed to 0.85 normal speed, add extra 0.15 from left trigger.
-    // if (speed < 0) speed = speed * 0.85 - 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);
-    // else speed = speed * 0.85 + 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);
-    // //Only move if allowed to.
-    // if (frc.robot.RobotContainer.DriveTrain.isDrivingAllowed() == true) {
-    //     frc.robot.RobotContainer.DriveTrain.arcadeDrive(speed, rotation);
-    // }
   }
 
   public void arcadeDrive(double speed, double rotation) {
