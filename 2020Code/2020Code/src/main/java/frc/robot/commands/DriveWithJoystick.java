@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -24,7 +25,7 @@ public class DriveWithJoystick extends CommandBase {
    */
   public DriveWithJoystick() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(frc.robot.Robot.driveTrain);
+    addRequirements(frc.robot.RobotContainer.DriveTrain);
   }
 
   // Called when the command is initially scheduled.
@@ -39,24 +40,24 @@ public class DriveWithJoystick extends CommandBase {
     double rotation;
     //Get joystick positions and set speed and rotation to them
     //Inputs below the inner bound are ignored
-    speed = Math.abs(frc.robot.Robot.oi.getJoystick1().getRawAxis(1)) >= innerBound ? frc.robot.Robot.oi.getJoystick1().getRawAxis(1) : 0;
-    rotation = Math.abs(frc.robot.Robot.oi.getJoystick1().getRawAxis(4)) >= innerBound ? frc.robot.Robot.oi.getJoystick1().getRawAxis(4) : 0;
+    speed = Math.abs(frc.robot.RobotContainer.m_driverController.getRawAxis(1)) >= innerBound ? frc.robot.RobotContainer.m_driverController.getRawAxis(1) : 0;
+    rotation = Math.abs(frc.robot.RobotContainer.m_driverController.getRawAxis(4)) >= innerBound ? frc.robot.RobotContainer.m_driverController.getRawAxis(4) : 0;
     //Go into slow speed mode if left bumper is pressed, slow rotation mode if right bumper is pressed
-    speed = frc.robot.Robot.oi.leftBumper1.get() ? speed * 0.5 : speed;
-    rotation = frc.robot.Robot.oi.rightBumper1.get() ? rotation * 0.5 : rotation;
+    speed = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kLeft) ? speed * 0.5 : speed;
+    rotation = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kRight) ? rotation * 0.5 : rotation;
     //Descrease speed to 0.85 normal speed, add extra 0.15 from left trigger.
-    if (speed < 0) speed = speed * 0.85 - 0.15 * frc.robot.Robot.oi.joystick1.getRawAxis(2);
-    else speed = speed * 0.85 + 0.15 * frc.robot.Robot.oi.joystick1.getRawAxis(2);
+    if (speed < 0) speed = speed * 0.85 - 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);
+    else speed = speed * 0.85 + 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);
     //Only move if allowed to.
-    if (frc.robot.Robot.driveTrain.isDrivingAllowed() == true) {
-        frc.robot.Robot.driveTrain.arcadeDrive(speed, rotation);
+    if (frc.robot.RobotContainer.DriveTrain.isDrivingAllowed() == true) {
+        frc.robot.RobotContainer.DriveTrain.arcadeDrive(speed, rotation);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    frc.robot.Robot.driveTrain.tankDrive(0,0);
+    frc.robot.RobotContainer.DriveTrain.tankDrive(0,0);
   }
 
   // Returns true when the command should end.
