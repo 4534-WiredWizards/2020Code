@@ -47,14 +47,6 @@ public class DiskControl extends SubsystemBase {
     else if (detectedColor.green > detectedColor.blue && detectedColor.blue > detectedColor.red) SmartDashboard.putString("DetectedColor", "Green");
     else if (detectedColor.red > detectedColor.green && detectedColor.green > detectedColor.blue || detectedColor.green < 0.5) SmartDashboard.putString("DetectedColor", "Red");
     else if (detectedColor.green > detectedColor.red && detectedColor.red > detectedColor.blue) SmartDashboard.putString("DetectedColor", "Yellow");
-    if (detectedColor.blue > detectedColor.green && detectedColor.green > detectedColor.red || detectedColor.blue > 0.27) detected = 0;
-    else if (detectedColor.green > detectedColor.blue && detectedColor.blue > detectedColor.red) detected = 1;
-    else if (detectedColor.red > detectedColor.green && detectedColor.green > detectedColor.blue || detectedColor.green < 0.5) detected = 2;
-    else if (detectedColor.green > detectedColor.red && detectedColor.red > detectedColor.blue) detected = 3;
-    if (detected != -1 && detected != (int)colorChooser.getSelected()) {
-      diskWheel.set(ControlMode.PercentOutput, 0.2);
-    }
-    else diskWheel.set(ControlMode.PercentOutput, 0);
   }
   public Color senseColor(){
     return m_colorSensor.getColor();
