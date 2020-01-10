@@ -56,4 +56,11 @@ public class DiskControl extends SubsystemBase {
     }
     else diskWheel.set(ControlMode.PercentOutput, 0);
   }
+  public Color senseColor(){
+    return m_colorSensor.getColor();
+  
+  }
+  public void DiskMotorController(double speed){
+    diskWheel.set(ControlMode.PercentOutput, speed);
+  }
 }
