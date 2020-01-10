@@ -27,6 +27,7 @@ public class RobotContainer {
   public static Drivetrain DriveTrain = new Drivetrain();
   public static Pneumatics pneumatics;
   public static Limelight limelight;
+  public static DiskControl Diskcontrol = new DiskControl();
 
   public static XboxController m_driverController = new XboxController(1);
 
