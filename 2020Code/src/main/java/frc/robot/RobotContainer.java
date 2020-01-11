@@ -27,10 +27,15 @@ import frc.robot.Constants.*;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  public static Drivetrain DriveTrain = new Drivetrain();
-  public static Pneumatics pneumatics;
-  public static Limelight limelight;
-  public static DiskControl Diskcontrol = new DiskControl();
+  public static Drivetrain DrivetrainT = new Drivetrain();
+  public static Pneumatics PneumaticsT = new Pneumatics();
+  public static Limelight LimelightT = new Limelight();
+  public static DiskControl DiskControlT = new DiskControl();
+  public static Navx NavxT = new Navx();
+  public static Intake IntakeT = new Intake();
+  public static Indexer IndexerT = new Indexer();
+  public static Climb ClimbT = new Climb();
+  public static Shooter ShooterT = new Shooter();
 
   public static XboxController m_driverController = new XboxController(1);
   private final Joystick m_joystick = new Joystick(1);
@@ -41,7 +46,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    DriveTrain.setDefaultCommand(new DriveWithJoystick());
+    DrivetrainT.setDefaultCommand(new DriveWithJoystick());
   }
 
   /**

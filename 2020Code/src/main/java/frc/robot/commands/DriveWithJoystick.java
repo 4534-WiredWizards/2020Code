@@ -26,7 +26,7 @@ public class DriveWithJoystick extends CommandBase {
    */
   public DriveWithJoystick() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(frc.robot.RobotContainer.DriveTrain);
+    addRequirements(frc.robot.RobotContainer.DrivetrainT);
   }
 
   // Called when the command is initially scheduled.
@@ -50,16 +50,16 @@ public class DriveWithJoystick extends CommandBase {
     if (speed < 0) speed = speed * 0.85 - 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);
     else speed = speed * 0.85 + 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);
     //Only move if allowed to.
-    if (frc.robot.RobotContainer.DriveTrain.isDrivingAllowed() == true) {
-        if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) > 0.1) frc.robot.RobotContainer.DriveTrain.arcadeDrive(-speed, -rotation);
-        if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) < 0.1) frc.robot.RobotContainer.DriveTrain.arcadeDrive(speed, rotation);
+    if (frc.robot.RobotContainer.DrivetrainT.isDrivingAllowed() == true) {
+        if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) > 0.1) frc.robot.RobotContainer.DrivetrainT.arcadeDrive(-speed, -rotation);
+        if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) < 0.1) frc.robot.RobotContainer.DrivetrainT.arcadeDrive(speed, rotation);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    frc.robot.RobotContainer.DriveTrain.tankDrive(0,0);
+    frc.robot.RobotContainer.DrivetrainT.tankDrive(0,0);
   }
 
   // Returns true when the command should end.

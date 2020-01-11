@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.I2C;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class DiskControl extends SubsystemBase {
   /**
@@ -27,6 +28,8 @@ public class DiskControl extends SubsystemBase {
 
     SendableChooser<Integer> colorChooser = new SendableChooser<Integer>();
 
+    private Solenoid piston;
+
   public DiskControl() {
     diskWheel.set(ControlMode.PercentOutput, 0);
     colorChooser.addDefault("Blue", 0);
@@ -34,6 +37,8 @@ public class DiskControl extends SubsystemBase {
 		colorChooser.addObject("Red", 2);
     colorChooser.addObject("Yellow", 3);
     SmartDashboard.putData("Color Chooser", colorChooser);
+    piston = new Solenoid(30, 2);
+    addChild("piston", piston);
   }
 
   @Override

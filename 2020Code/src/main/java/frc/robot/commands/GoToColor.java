@@ -30,7 +30,7 @@ public class GoToColor extends CommandBase {
    *  The subsystem used by this command.
    */
   public GoToColor() {
-    addRequirements(frc.robot.RobotContainer.Diskcontrol);
+    addRequirements(frc.robot.RobotContainer.DiskControlT);
   }
 
   // Called when the command is initially scheduled.
@@ -47,23 +47,23 @@ public class GoToColor extends CommandBase {
   @Override
   public void execute() {
 
-    if (frc.robot.RobotContainer.Diskcontrol.senseColor().blue > frc.robot.RobotContainer.Diskcontrol.senseColor().green && frc.robot.RobotContainer.Diskcontrol.senseColor().green > frc.robot.RobotContainer.Diskcontrol.senseColor().red || frc.robot.RobotContainer.Diskcontrol.senseColor().blue > 0.27) detected = 2;
-    else if (frc.robot.RobotContainer.Diskcontrol.senseColor().green > frc.robot.RobotContainer.Diskcontrol.senseColor().blue && frc.robot.RobotContainer.Diskcontrol.senseColor().blue > frc.robot.RobotContainer.Diskcontrol.senseColor().red) detected = 3;
-    else if (frc.robot.RobotContainer.Diskcontrol.senseColor().red > frc.robot.RobotContainer.Diskcontrol.senseColor().green && frc.robot.RobotContainer.Diskcontrol.senseColor().green > frc.robot.RobotContainer.Diskcontrol.senseColor().blue || frc.robot.RobotContainer.Diskcontrol.senseColor().green < 0.5) detected = 0;
-    else if (frc.robot.RobotContainer.Diskcontrol.senseColor().green > frc.robot.RobotContainer.Diskcontrol.senseColor().red && frc.robot.RobotContainer.Diskcontrol.senseColor().red > frc.robot.RobotContainer.Diskcontrol.senseColor().blue) detected = 1;
+    if (frc.robot.RobotContainer.DiskControlT.senseColor().blue > frc.robot.RobotContainer.DiskControlT.senseColor().green && frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().red || frc.robot.RobotContainer.DiskControlT.senseColor().blue > 0.27) detected = 2;
+    else if (frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().blue && frc.robot.RobotContainer.DiskControlT.senseColor().blue > frc.robot.RobotContainer.DiskControlT.senseColor().red) detected = 3;
+    else if (frc.robot.RobotContainer.DiskControlT.senseColor().red > frc.robot.RobotContainer.DiskControlT.senseColor().green && frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().blue || frc.robot.RobotContainer.DiskControlT.senseColor().green < 0.5) detected = 0;
+    else if (frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().red && frc.robot.RobotContainer.DiskControlT.senseColor().red > frc.robot.RobotContainer.DiskControlT.senseColor().blue) detected = 1;
     // if (detected != -1 && detected != (int)colorChooser.getSelected()) {
-    //   frc.robot.RobotContainer.Diskcontrol.DiskMotorController(.2);
+    //   frc.robot.RobotContainer.DiskControlT.DiskMotorController(.2);
     // }
     if (map[detected][(int)colorChooser.getSelected()].equals("CW")) {
-      frc.robot.RobotContainer.Diskcontrol.DiskMotorController(.2);
+      frc.robot.RobotContainer.DiskControlT.DiskMotorController(.2);
     }
-    else frc.robot.RobotContainer.Diskcontrol.DiskMotorController(-.2);
+    else frc.robot.RobotContainer.DiskControlT.DiskMotorController(-.2);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    frc.robot.RobotContainer.Diskcontrol.DiskMotorController(0);
+    frc.robot.RobotContainer.DiskControlT.DiskMotorController(0);
       
   }
 
