@@ -14,8 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.I2C;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.Solenoid;
+import frc.robot.Constants.DebugConstants;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class DiskControl extends SubsystemBase {
   /**
@@ -26,32 +27,33 @@ public class DiskControl extends SubsystemBase {
 
     private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
 
-    SendableChooser<Integer> colorChooser = new SendableChooser<Integer>();
+    // SendableChooser<Integer> colorChooser = new SendableChooser<Integer>();
 
     private Solenoid piston;
 
   public DiskControl() {
     diskWheel.set(ControlMode.PercentOutput, 0);
-    colorChooser.addDefault("Blue", 0);
-		colorChooser.addObject("Green", 1);
-		colorChooser.addObject("Red", 2);
-    colorChooser.addObject("Yellow", 3);
-    SmartDashboard.putData("Color Chooser", colorChooser);
+    // colorChooser.addOption("Blue", 0);
+		// colorChooser.addOption("Green", 1);
+		// colorChooser.addOption("Red", 2);
+    // colorChooser.addOption("Yellow", 3);
+    // SmartDashboard.putData("Color Chooser", colorChooser);
     piston = new Solenoid(30, 2);
     addChild("piston", piston);
   }
 
   @Override
   public void periodic() {
-    int detected = -1;
-    Color detectedColor = m_colorSensor.getColor();
-    SmartDashboard.putNumber("Red", detectedColor.red);
-    SmartDashboard.putNumber("Green", detectedColor.green);
-    SmartDashboard.putNumber("Blue", detectedColor.blue);
-    if (detectedColor.blue > detectedColor.green && detectedColor.green > detectedColor.red || detectedColor.blue > 0.27) SmartDashboard.putString("DetectedColor", "Blue");
-    else if (detectedColor.green > detectedColor.blue && detectedColor.blue > detectedColor.red) SmartDashboard.putString("DetectedColor", "Green");
-    else if (detectedColor.red > detectedColor.green && detectedColor.green > detectedColor.blue || detectedColor.green < 0.5) SmartDashboard.putString("DetectedColor", "Red");
-    else if (detectedColor.green > detectedColor.red && detectedColor.red > detectedColor.blue) SmartDashboard.putString("DetectedColor", "Yellow");
+    if(DebugConstants.debugMode) {
+      Color detectedColor = m_colorSensor.getColor();
+      SmartDashboard.putNumber("Red", detectedColor.red);
+      SmartDashboard.putNumber("Green", detectedColor.green);
+      SmartDashboard.putNumber("Blue", detectedColor.blue);
+      if (detectedColor.blue > detectedColor.green && detectedColor.green > detectedColor.red || detectedColor.blue > 0.27) SmartDashboard.putString("DetectedColor", "Blue");
+      else if (detectedColor.green > detectedColor.blue && detectedColor.blue > detectedColor.red) SmartDashboard.putString("DetectedColor", "Green");
+      else if (detectedColor.red > detectedColor.green && detectedColor.green > detectedColor.blue || detectedColor.green < 0.5) SmartDashboard.putString("DetectedColor", "Red");
+      else if (detectedColor.green > detectedColor.red && detectedColor.red > detectedColor.blue) SmartDashboard.putString("DetectedColor", "Yellow");
+    }
   }
   public Color senseColor(){
     return m_colorSensor.getColor();

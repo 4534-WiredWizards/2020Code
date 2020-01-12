@@ -10,15 +10,12 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.commands.DriveWithJoystick;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.GoToColor;
+import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.*;
+// import frc.robot.Constants.*;
+// import edu.wpi.first.wpilibj.util.Color;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -38,7 +35,7 @@ public class RobotContainer {
   public static Climb ClimbT = new Climb();
   public static Shooter ShooterT = new Shooter();
 
-  public static XboxController m_driverController = new XboxController(1);
+  public static XboxController m_driverController = new XboxController(0);
  
   private final Joystick m_joystick = new Joystick(1);
 
@@ -59,8 +56,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     final JoystickButton a = new JoystickButton(m_joystick, 1);
+    final JoystickButton b = new JoystickButton(m_joystick, 2);
 
     a.whenPressed(new GoToColor());
+    b.whenPressed(new SpinTimes());
   }
 
 

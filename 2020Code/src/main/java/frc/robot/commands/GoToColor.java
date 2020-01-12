@@ -7,11 +7,7 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-import java.lang.reflect.Array;
-
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -36,10 +32,10 @@ public class GoToColor extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    colorChooser.addDefault("Blue", 0);
-		colorChooser.addObject("Green", 1);
-		colorChooser.addObject("Red", 2);
-    colorChooser.addObject("Yellow", 3);
+    colorChooser.setDefaultOption("Blue", 0);
+		colorChooser.addOption("Green", 1);
+		colorChooser.addOption("Red", 2);
+    colorChooser.addOption("Yellow", 3);
     SmartDashboard.putData("Color Chooser", colorChooser);
   }
   

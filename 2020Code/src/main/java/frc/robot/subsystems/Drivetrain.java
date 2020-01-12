@@ -8,17 +8,15 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.commands.*;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+// import edu.wpi.first.wpilibj.GenericHID.Hand;
+// import edu.wpi.first.wpilibj.Solenoid;
+// import edu.wpi.first.wpilibj.Spark;
+// import edu.wpi.first.wpilibj.SpeedController;
 
 public class Drivetrain extends SubsystemBase {
   private CANSparkMax rightMaster;

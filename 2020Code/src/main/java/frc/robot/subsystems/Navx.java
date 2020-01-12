@@ -7,17 +7,14 @@
 
 package frc.robot.subsystems;
 
-import com.kauailabs.navx.frc.*;
 import com.kauailabs.navx.frc.AHRS;
 import com.kauailabs.navx.frc.AHRS.SerialDataType;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Navx extends SubsystemBase {
   /**
@@ -49,5 +46,9 @@ public class Navx extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+  
+  public double getHeading() {
+    return ahrs.getAngle();
   }
 }
