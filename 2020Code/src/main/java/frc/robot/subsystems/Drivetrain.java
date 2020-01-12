@@ -143,4 +143,7 @@ public class Drivetrain extends SubsystemBase {
   public boolean isDrivingAllowed() {
     return drivingEnabled;
   }
+  public double getEncoderAverage() {
+    return (getRightEncoders() + getLeftEncoders() / 2);
+  }
 }

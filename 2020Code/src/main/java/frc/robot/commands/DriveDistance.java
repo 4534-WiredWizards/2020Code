@@ -14,28 +14,28 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 // import com.kauailabs.navx.frc.AHRS.SerialDataType;
 
 /**
- * A command that will turn the robot to the specified angle.
+ * A command that will drive the robot to the specified distance.
  */
-public class TurnAngle extends PIDCommand {
+public class DriveDistance extends PIDCommand {
   /**
-   * Turns to robot to the specified angle.
+   * Drives robot to the specified distance.
    *
    */
-  public TurnAngle(double targetAngleDegrees) {
+  public DriveDistance(double targetDistanceInches) {
     super(
         new PIDController(1, 0, 0),
         // Close loop on heading
-        frc.robot.RobotContainer.NavxT::getHeading,
+        frc.robot.RobotContainer.DrivetrainT::getEncoderAverage,
         // Set reference to target
-        (targetAngleDegrees - frc.robot.RobotContainer.NavxT.getHeading()),
+        (targetDistanceInches - frc.robot.RobotContainer.DrivetrainT.getEncoderAverage()),
         // Pipe output to turn robot
-        output -> frc.robot.RobotContainer.DrivetrainT.arcadeDrive(0, output));
+        output -> frc.robot.RobotContainer.DrivetrainT.arcadeDrive(output, 0));
 
     // Set the controller to be continuous (because it is an angle controller)
-    getController().enableContinuousInput(-180, 180);
+    // getController().enableContinuousInput(-180, 180);
     // Set the controller tolerance - the delta tolerance ensures the robot is stationary at the
     // setpoint before it is considered as having reached the reference
-    getController().setTolerance(2, 10);
+    getController().setTolerance(2, 5);
   }
 
   @Override
