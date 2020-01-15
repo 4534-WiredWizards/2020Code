@@ -51,9 +51,9 @@ public class GoToColor extends CommandBase {
     //   frc.robot.RobotContainer.DiskControlT.DiskMotorController(.2);
     // }
     if (map[detected][(int)colorChooser.getSelected()].equals("CW")) {
-      frc.robot.RobotContainer.DiskControlT.DiskMotorController(.2);
+      frc.robot.RobotContainer.DiskControlT.DiskMotorController(-.25);
     }
-    else frc.robot.RobotContainer.DiskControlT.DiskMotorController(-.2);
+    else frc.robot.RobotContainer.DiskControlT.DiskMotorController(.25);
   }
 
   // Called once the command ends or is interrupted.

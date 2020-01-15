@@ -9,9 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 // import frc.robot.subsystems.Drivetrain;
 // import com.kauailabs.navx.frc.AHRS;
 // import com.kauailabs.navx.frc.AHRS.SerialDataType;
+import edu.wpi.first.wpiutil.math.MathUtil;
 
 /**
  * A command that will drive the robot to the specified distance.
@@ -23,13 +25,13 @@ public class DriveDistance extends PIDCommand {
    */
   public DriveDistance(double targetDistanceInches) {
     super(
-        new PIDController(1, 0, 0),
+        new PIDController(0.05, 0.001, 0),
         // Close loop on heading
         frc.robot.RobotContainer.DrivetrainT::getEncoderAverage,
         // Set reference to target
-        (targetDistanceInches - frc.robot.RobotContainer.DrivetrainT.getEncoderAverage()),
+        (targetDistanceInches + frc.robot.RobotContainer.DrivetrainT.getEncoderAverage()),
         // Pipe output to turn robot
-        output -> frc.robot.RobotContainer.DrivetrainT.arcadeDrive(output, 0));
+        output -> frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(output, 0, 0.6), 0));
 
     // Set the controller to be continuous (because it is an angle controller)
     // getController().enableContinuousInput(-180, 180);

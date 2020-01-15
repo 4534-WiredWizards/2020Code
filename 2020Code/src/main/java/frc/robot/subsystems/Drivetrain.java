@@ -133,7 +133,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getRightEncoders() {
-    return ((rightMasterEncoder.getPosition() + rightFollowerEncoder1.getPosition() + rightFollowerEncoder2.getPosition())/3);
+    return ((-rightMasterEncoder.getPosition() + -rightFollowerEncoder1.getPosition() + -rightFollowerEncoder2.getPosition())/3);
   }
 
   public void allowDrive(boolean allow) {

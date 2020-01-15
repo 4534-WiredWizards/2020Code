@@ -57,9 +57,13 @@ public class RobotContainer {
   private void configureButtonBindings() {
     final JoystickButton a = new JoystickButton(m_joystick, 1);
     final JoystickButton b = new JoystickButton(m_joystick, 2);
+    final JoystickButton x = new JoystickButton(m_joystick, 3);
+    final JoystickButton y = new JoystickButton(m_joystick, 4);
 
     a.whenPressed(new GoToColor());
     b.whenPressed(new SpinTimes());
+    x.whenPressed(new TurnAngle(90));
+    y.whenPressed(new DriveDistance(100));
   }
 
 
