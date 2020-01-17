@@ -37,7 +37,7 @@ public class RobotContainer {
 
   public static XboxController m_driverController = new XboxController(0);
  
-  private final Joystick m_joystick = new Joystick(1);
+  public static Joystick m_joystick = new Joystick(1);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -63,7 +63,7 @@ public class RobotContainer {
     a.whenPressed(new GoToColor());
     b.whenPressed(new SpinTimes());
     x.whenPressed(new TurnAngle(90));
-    y.whenPressed(new DriveDistance(100));
+    y.whenPressed(new DriveDistance(100).withTimeout(4));
   }
 
 
