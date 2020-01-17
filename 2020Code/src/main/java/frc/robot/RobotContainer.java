@@ -62,7 +62,7 @@ public class RobotContainer {
 
     a.whenPressed(new GoToColor());
     b.whenPressed(new SpinTimes());
-    x.whenPressed(new TurnAngle(90));
+    x.whenPressed(new TurnAngle(90).withTimeout(4));
     y.whenPressed(new DriveDistance(100).withTimeout(4));
   }
 
