@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class Updog extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ExampleSubsystem m_subsystem;
 
   /**
    * Creates a new ExampleCommand.
@@ -23,7 +22,6 @@ public class Updog extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   public Updog(ExampleSubsystem subsystem) {
-    m_subsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
   }
