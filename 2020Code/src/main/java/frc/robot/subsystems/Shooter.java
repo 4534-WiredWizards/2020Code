@@ -32,4 +32,7 @@ public class Shooter extends SubsystemBase {
   public void setShooterSpeed(double speed) {
     Shoot1.set(ControlMode.PercentOutput, speed * 0.75);
   }
+  public void setTurretSpeed(double speed) {
+    Shoot1.set(ControlMode.PercentOutput, speed * 0.75);
+  }
 }

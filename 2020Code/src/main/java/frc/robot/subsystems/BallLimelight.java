@@ -12,11 +12,11 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
 
-public class Limelight extends SubsystemBase {
+public class BallLimelight extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-  public Limelight() {
+  public BallLimelight() {
 
   }
 

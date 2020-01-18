@@ -7,18 +7,12 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpiutil.math.MathUtil;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class DriveDistance extends CommandBase {
+public class TargetPort extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
   /**
@@ -26,39 +20,46 @@ public class DriveDistance extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  double m_distance = 0;
-  PIDController pid = new PIDController(0.05, 0.01, 0);
-  public DriveDistance(double distance) {
+  double angle;
+  double distance;
+  double predictor;
+  double robotVelocity;
+  double ballVelocity;
+  double turretAngle;
+  public TargetPort() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(frc.robot.RobotContainer.DrivetrainT);
-    m_distance = distance;
+    addRequirements(frc.robot.RobotContainer.ShooterT);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pid.setTolerance(2, 10);
-    frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
-    frc.robot.RobotContainer.DrivetrainT.resetEncoders();
+    frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(1);
+    angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage(), m_distance), -0.4, 0.4), 0);
-    SmartDashboard.putNumber("Off", frc.robot.RobotContainer.DrivetrainT.getEncoderAverage());
+    turretAngle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + 1; //frc.robot.RobotContainer.Shooter.getAngle()
+    distance = (Math.sqrt(frc.robot.RobotContainer.ShooterLimelightT.getArea()) / Math.sqrt(0.8)) * 20 * Math.sin(Math.toRadians(30));
+    robotVelocity = frc.robot.RobotContainer.DrivetrainT.getVelocity();
+    ballVelocity = distance;
+    predictor = Math.asin((robotVelocity * Math.sin(Math.toRadians(turretAngle))) / ballVelocity);
+    angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + predictor;
+    if (Math.abs(angle) > 0.1) frc.robot.RobotContainer.ShooterT.setTurretSpeed(angle * 0.1);
+    frc.robot.RobotContainer.ShooterT.setShooterSpeed(distance * 2 / 20);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(0,0);
-    frc.robot.RobotContainer.DrivetrainT.allowDrive(true);
+    frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return pid.atSetpoint();
+    return false;
   }
 }

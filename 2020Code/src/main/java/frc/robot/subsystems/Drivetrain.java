@@ -98,6 +98,7 @@ public class Drivetrain extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Left Encoders", getLeftEncoders());
     SmartDashboard.putNumber("Right Encoders", getRightEncoders());
+    SmartDashboard.putNumber("Avg Encoders", getEncoderAverage());
   }
 
   public void arcadeDrive(double speed, double rotation) {
@@ -129,11 +130,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftEncoders() {
-    return ((leftMasterEncoder.getPosition() + leftFollowerEncoder1.getPosition() + leftFollowerEncoder2.getPosition())/3);
+    return ((leftMasterEncoder.getPosition() + leftFollowerEncoder1.getPosition() + leftFollowerEncoder2.getPosition())/3) * 200/178.88;
   }
 
   public double getRightEncoders() {
-    return ((-rightMasterEncoder.getPosition() + -rightFollowerEncoder1.getPosition() + -rightFollowerEncoder2.getPosition())/3);
+    return ((-rightMasterEncoder.getPosition() + -rightFollowerEncoder1.getPosition() + -rightFollowerEncoder2.getPosition())/3) * 200/178.88;
   }
 
   public void allowDrive(boolean allow) {
@@ -145,5 +146,16 @@ public class Drivetrain extends SubsystemBase {
   }
   public double getEncoderAverage() {
     return (getRightEncoders() + getLeftEncoders() / 2);
+  }
+  public void resetEncoders() {
+    leftFollowerEncoder2.setPosition(0);
+    leftFollowerEncoder1.setPosition(0);
+    leftMasterEncoder.setPosition(0);
+    rightFollowerEncoder2.setPosition(0);
+    rightFollowerEncoder1.setPosition(0);
+    rightMasterEncoder.setPosition(0);
+  }
+  public double getVelocity() {
+    return ((leftMasterEncoder.getVelocity() + rightMasterEncoder.getVelocity()) / 2) * 200/178.88;
   }
 }

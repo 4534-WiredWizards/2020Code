@@ -27,13 +27,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static Drivetrain DrivetrainT = new Drivetrain();
   public static Pneumatics PneumaticsT = new Pneumatics();
-  public static Limelight LimelightT = new Limelight();
+  public static ShooterLimelight ShooterLimelightT = new ShooterLimelight();
   public static DiskControl DiskControlT = new DiskControl();
   public static Navx NavxT = new Navx();
   public static Intake IntakeT = new Intake();
   public static Indexer IndexerT = new Indexer();
   public static Climb ClimbT = new Climb();
   public static Shooter ShooterT = new Shooter();
+  public static BallLimelight BallLimelightT = new BallLimelight();
 
   public static XboxController m_driverController = new XboxController(0);
  
@@ -63,7 +64,7 @@ public class RobotContainer {
     a.whenPressed(new GoToColor());
     b.whenPressed(new SpinTimes());
     x.whenPressed(new TurnAngle(90).withTimeout(4));
-    y.whenPressed(new DriveDistance(100).withTimeout(4));
+    y.whenPressed(new DriveDistance(50).withTimeout(4));
   }
 
 
