@@ -39,6 +39,11 @@ public class Lights extends SubsystemBase {
           m_ledBuffer.setRGB(i, red, green, blue);
         }
         break;
+      case "rainbow road":
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+          hsvToRgb((i % specialA)/specialA, 1, 1);
+          m_ledBuffer.setRGB(i, red, green, blue);
+        }
       case "simple":
         for (var i = 0; i < m_ledBuffer.getLength(); i = i + specialA) {
           for (var j = i; j < i + specialB; j++) {
@@ -69,4 +74,45 @@ public class Lights extends SubsystemBase {
     specialA = ExtraOne;
     specialB = ExtraTwo;
   }
+  // public void convertRainbow(int H){
+  //   if (0 < H < 60)
+  //   return (1,x,0);
+  // }
+  public void hsvToRgb(float hue, float saturation, float value) {
+
+    int h = (int)(hue * 6);
+    float f = hue * 6 - h;
+    float p = value * (1 - saturation);
+    float q = value * (1 - f * saturation);
+    float t = value * (1 - (1 - f) * saturation);
+
+    switch (h) {
+      case 0: 
+        rgbToInt(value, t, p);
+        break;
+      case 1: 
+        rgbToInt(q, value, p);
+        break;
+      case 2:
+        rgbToInt(p, value, t);
+        break;
+      case 3:
+        rgbToInt(p, q, value);
+        break;
+      case 4:
+        rgbToInt(t, p, value);
+        break;
+      case 5: 
+        rgbToInt(value, p, q);
+        break;
+      default: throw new RuntimeException("Something went wrong when converting from HSV to RGB. Input was " + hue + ", " + saturation + ", " + value);
+    }
+  }
+
+  public void rgbToInt(float r, float g, float b) {
+    red = (int)(r * 255);
+    blue = (int)(b * 255);
+    green = (int)(g * 255);
+  }
 }
+
