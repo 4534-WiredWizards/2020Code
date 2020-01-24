@@ -25,7 +25,7 @@ public class Indexer extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if(frc.robot.RobotContainer.m_joystick.getRawButton(1)) {
-      indexMotor.set(ControlMode.PercentOutput, 0.2);
+      indexMotor.set(ControlMode.PercentOutput, -0.7);
     }
     else {
       indexMotor.set(ControlMode.PercentOutput, 0);
