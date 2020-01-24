@@ -39,4 +39,7 @@ public class Shooter extends SubsystemBase {
   public void setTurretSpeed(double speed) {
     Turret.set(-speed * 0.1);
   }
+  public double getAngle() {
+    return TurretEncoder.getPosition();
+  }
 }
