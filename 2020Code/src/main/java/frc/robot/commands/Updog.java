@@ -6,8 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -21,14 +19,14 @@ public class Updog extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public Updog(ExampleSubsystem subsystem) {
+  public Updog() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    frc.robot.RobotContainer.LightsT.setLedPattern("blink", 127, 0, 0, 1, 1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,6 +37,7 @@ public class Updog extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    //frc.robot.RobotContainer.LightsT.setLedPattern("solid", 0, 0, 0, 0, 0);
   }
 
   // Returns true when the command should end.

@@ -17,18 +17,17 @@ public class Lights extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
   AddressableLED m_led = new AddressableLED(9);
-  AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(60);
-  String pattern;
-  int red;
-  int green;
-  int blue;
-  int specialA;
-  int specialB;
+  AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(5);
+  String pattern = "none";
+  int red = 0;
+  int green = 0;
+  int blue = 0;
+  int specialA = 0;
+  int specialB = 0;
   public Lights() {
     m_led.setLength(m_ledBuffer.getLength());
     m_led.setData(m_ledBuffer);
     m_led.start();
-
   }
 
   @Override
@@ -62,6 +61,8 @@ public class Lights extends SubsystemBase {
             m_ledBuffer.setRGB(i, 0, 0, 0);
           }
         }
+        break;
+      default:
         break;
     }
     m_led.setData(m_ledBuffer);

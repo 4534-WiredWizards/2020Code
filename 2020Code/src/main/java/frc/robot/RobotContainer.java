@@ -35,6 +35,7 @@ public class RobotContainer {
   public static Climb ClimbT = new Climb();
   public static Shooter ShooterT = new Shooter();
   public static BallLimelight BallLimelightT = new BallLimelight();
+  public static Lights LightsT = new Lights();
 
   public static XboxController m_driverController = new XboxController(0);
  
@@ -64,7 +65,7 @@ public class RobotContainer {
     //a.whenPressed(new GoToColor());
     //b.whenPressed(new SpinTimes());
     //x.whenPressed(new TurnAngle(90).withTimeout(4));
-    y.toggleWhenPressed(new TargetPort());
+    y.toggleWhenPressed(new Updog());
   }
 
 
