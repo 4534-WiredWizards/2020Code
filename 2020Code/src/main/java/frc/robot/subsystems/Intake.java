@@ -9,19 +9,33 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Solenoid;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Intake extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
+  private CANSparkMax motor;
   private Solenoid piston;
   public Intake() {
     piston = new Solenoid(30, 1);
     addChild("piston", piston);
+    motor = new CANSparkMax(21, MotorType.kBrushless);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    if(frc.robot.RobotContainer.m_joystick.getRawButton(2)) {
+      motor.set(-0.4);
+    }
+    else {
+      if(frc.robot.RobotContainer.m_joystick.getRawButton(3)) {
+        motor.set(0.4);
+      }
+      else {
+        motor.set(0);
+      }
+    }
   }
 }

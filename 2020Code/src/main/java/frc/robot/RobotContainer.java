@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
-// import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.Constants.*;
 // import edu.wpi.first.wpilibj.util.Color;
 
@@ -59,12 +59,12 @@ public class RobotContainer {
     //final JoystickButton a = new JoystickButton(m_joystick, 1);
     //final JoystickButton b = new JoystickButton(m_joystick, 2);
     //final JoystickButton x = new JoystickButton(m_joystick, 3);
-    //final JoystickButton y = new JoystickButton(m_joystick, 4);
+    final JoystickButton y = new JoystickButton(m_joystick, 4);
 
     //a.whenPressed(new GoToColor());
     //b.whenPressed(new SpinTimes());
     //x.whenPressed(new TurnAngle(90).withTimeout(4));
-    //y.whenPressed(new DriveDistance(50).withTimeout(4));
+    y.toggleWhenPressed(new TargetPort());
   }
 
 

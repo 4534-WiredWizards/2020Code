@@ -21,14 +21,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Drivetrain extends SubsystemBase {
   private CANSparkMax rightMaster;
   private CANEncoder rightMasterEncoder;
-  private CANSparkMax rightFollower1;
+  //private CANSparkMax rightFollower1;
   private CANEncoder rightFollowerEncoder1;
   private CANSparkMax rightFollower2;
   private CANEncoder rightFollowerEncoder2;
   
   private CANSparkMax leftMaster;
   private CANEncoder leftMasterEncoder;
-  private CANSparkMax leftFollower1;
+  //private CANSparkMax leftFollower1;
   private CANEncoder leftFollowerEncoder1;
   private CANSparkMax leftFollower2;
   private CANEncoder leftFollowerEncoder2;
@@ -57,9 +57,9 @@ public class Drivetrain extends SubsystemBase {
     rightMaster.setInverted(true);
     rightMasterEncoder = rightMaster.getEncoder();
     
-    rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
-    rightFollower1.setInverted(true);
-    rightFollowerEncoder1 = rightFollower1.getEncoder();
+    // rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
+    // rightFollower1.setInverted(true);
+    // rightFollowerEncoder1 = rightFollower1.getEncoder();
 
     rightFollower2 = new CANSparkMax(12, MotorType.kBrushless);
     rightFollower2.setInverted(true);
@@ -71,18 +71,18 @@ public class Drivetrain extends SubsystemBase {
     leftMaster.setInverted(true);
     leftMasterEncoder = leftMaster.getEncoder();
     
-    leftFollower1 = new CANSparkMax(14, MotorType.kBrushless);
-    leftFollower1.setInverted(true);
-    leftFollowerEncoder1 = leftFollower1.getEncoder();
+    // leftFollower1 = new CANSparkMax(13, MotorType.kBrushless);
+    // leftFollower1.setInverted(true);
+    // leftFollowerEncoder1 = leftFollower1.getEncoder();
 
     leftFollower2 = new CANSparkMax(15, MotorType.kBrushless);
     leftFollower2.setInverted(true);
     leftFollowerEncoder2 = leftFollower2.getEncoder();
     
 
-    leftFollower1.follow(leftMaster);
+    //leftFollower1.follow(leftMaster);
     leftFollower2.follow(leftMaster);
-    rightFollower1.follow(rightMaster);
+    //rightFollower1.follow(rightMaster);
     rightFollower2.follow(rightMaster);
     
     diffDrive = new DifferentialDrive(leftMaster, rightMaster);
@@ -130,11 +130,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftEncoders() {
-    return ((leftMasterEncoder.getPosition() + leftFollowerEncoder1.getPosition() + leftFollowerEncoder2.getPosition())/3) * 200/178.88;
+    return ((leftMasterEncoder.getPosition() + /*leftFollowerEncoder1.getPosition()*/ + leftFollowerEncoder2.getPosition())/3) * 200/178.88;
   }
 
   public double getRightEncoders() {
-    return ((-rightMasterEncoder.getPosition() + -rightFollowerEncoder1.getPosition() + -rightFollowerEncoder2.getPosition())/3) * 200/178.88;
+    return ((-rightMasterEncoder.getPosition() + -/*ghtFollowerEncoder1.getPosition()*/ + -rightFollowerEncoder2.getPosition())/3) * 200/178.88;
   }
 
   public void allowDrive(boolean allow) {
