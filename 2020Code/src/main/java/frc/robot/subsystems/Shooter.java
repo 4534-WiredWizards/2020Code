@@ -9,10 +9,12 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
 
 public class Shooter extends SubsystemBase {
   /**
@@ -24,6 +26,7 @@ public class Shooter extends SubsystemBase {
   CANEncoder TurretEncoder = Turret.getEncoder();
   public Shooter() {
     Shoot2.follow(Shoot1);
+    Turret.setOpenLoopRampRate(5);
   }
 
   @Override
@@ -37,7 +40,7 @@ public class Shooter extends SubsystemBase {
     Shoot1.set(ControlMode.PercentOutput, speed * 0.75);
   }
   public void setTurretSpeed(double speed) {
-    Turret.set(-speed * 0.1);
+    Turret.set(MathUtil.clamp(-speed, -0.1, 0.1));
   }
   public double getAngle() {
     return TurretEncoder.getPosition();

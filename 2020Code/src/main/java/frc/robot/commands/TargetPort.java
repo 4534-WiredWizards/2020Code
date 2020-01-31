@@ -26,6 +26,7 @@ public class TargetPort extends CommandBase {
   double robotVelocity;
   double ballVelocity;
   double turretAngle;
+  long time;
   public TargetPort() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.ShooterT);
@@ -34,29 +35,36 @@ public class TargetPort extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(1);
+    frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(0);
     angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew();
+    frc.robot.RobotContainer.ShooterLimelightT.setPipeline(1);
+    time = System.currentTimeMillis();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    turretAngle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + frc.robot.RobotContainer.ShooterT.getAngle();
-    distance = (Math.sqrt(frc.robot.RobotContainer.ShooterLimelightT.getArea()) / Math.sqrt(0.8)) * 20 * Math.sin(Math.toRadians(30)); //needs testing for equation
-    robotVelocity = frc.robot.RobotContainer.DrivetrainT.getVelocity();
-    ballVelocity = distance; //needs testing for equation
-    predictor = 0;//Math.asin((robotVelocity * Math.sin(Math.toRadians(turretAngle))) / ballVelocity);
-    angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + predictor;
-    if (Math.abs(angle) > 0.1) frc.robot.RobotContainer.ShooterT.setTurretSpeed(angle * 0.1); //needs testing for equation
-    //frc.robot.RobotContainer.ShooterT.setShooterSpeed(distance * 2 / 20); //needs testing for equation
+    // turretAngle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + frc.robot.RobotContainer.ShooterT.getAngle();
+    // distance = (Math.sqrt(frc.robot.RobotContainer.ShooterLimelightT.getArea()) / Math.sqrt(0.8)) * 20 * Math.sin(Math.toRadians(30)); //needs testing for equation
+    // robotVelocity = frc.robot.RobotContainer.DrivetrainT.getVelocity();
+    // ballVelocity = distance; //needs testing for equation
+    // predictor = 0;//Math.asin((robotVelocity * Math.sin(Math.toRadians(turretAngle))) / ballVelocity);
+    // angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + predictor;
+    // if (Math.abs(angle) > 0.1) frc.robot.RobotContainer.ShooterT.setTurretSpeed(angle * 0.1); //needs testing for equation
+    // //frc.robot.RobotContainer.ShooterT.setShooterSpeed(distance * 2 / 20); //needs testing for equation
+    if(System.currentTimeMillis() > time + 1000) {
+      turretAngle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew();
+      if (Math.abs(turretAngle) > 0.1) frc.robot.RobotContainer.ShooterT.setTurretSpeed(turretAngle * 0.1);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(0);
+    frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(1);
     frc.robot.RobotContainer.ShooterT.setTurretSpeed(0);
     frc.robot.RobotContainer.ShooterT.setShooterSpeed(0);
+    frc.robot.RobotContainer.ShooterLimelightT.setPipeline(0);
   }
 
   // Returns true when the command should end.
