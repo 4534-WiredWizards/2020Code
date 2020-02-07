@@ -22,14 +22,14 @@ public class Drivetrain extends SubsystemBase {
   private CANSparkMax rightMaster;
   private CANEncoder rightMasterEncoder;
   //private CANSparkMax rightFollower1;
-  private CANEncoder rightFollowerEncoder1;
+  //private CANEncoder rightFollowerEncoder1;
   private CANSparkMax rightFollower2;
   private CANEncoder rightFollowerEncoder2;
   
   private CANSparkMax leftMaster;
   private CANEncoder leftMasterEncoder;
   //private CANSparkMax leftFollower1;
-  private CANEncoder leftFollowerEncoder1;
+  //private CANEncoder leftFollowerEncoder1;
   private CANSparkMax leftFollower2;
   private CANEncoder leftFollowerEncoder2;
 
@@ -56,7 +56,8 @@ public class Drivetrain extends SubsystemBase {
     rightMaster = new CANSparkMax(10, MotorType.kBrushless);
     rightMaster.setInverted(true);
     rightMasterEncoder = rightMaster.getEncoder();
-    
+    rightMasterEncoder.setPositionConversionFactor(200/178.88);
+    rightMasterEncoder.setVelocityConversionFactor(200/178.88);
     // rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
     // rightFollower1.setInverted(true);
     // rightFollowerEncoder1 = rightFollower1.getEncoder();
@@ -64,12 +65,16 @@ public class Drivetrain extends SubsystemBase {
     rightFollower2 = new CANSparkMax(12, MotorType.kBrushless);
     rightFollower2.setInverted(true);
     rightFollowerEncoder2 = rightFollower2.getEncoder();
+    rightFollowerEncoder2.setPositionConversionFactor(200/178.88);
+    rightFollowerEncoder2.setVelocityConversionFactor(200/178.88);
 
 
 
     leftMaster = new CANSparkMax(13, MotorType.kBrushless);
     leftMaster.setInverted(true);
     leftMasterEncoder = leftMaster.getEncoder();
+    leftMasterEncoder.setPositionConversionFactor(200/178.88);
+    leftMasterEncoder.setVelocityConversionFactor(200/178.88);
     
     // leftFollower1 = new CANSparkMax(13, MotorType.kBrushless);
     // leftFollower1.setInverted(true);
@@ -78,6 +83,8 @@ public class Drivetrain extends SubsystemBase {
     leftFollower2 = new CANSparkMax(15, MotorType.kBrushless);
     leftFollower2.setInverted(true);
     leftFollowerEncoder2 = leftFollower2.getEncoder();
+    leftFollowerEncoder2.setPositionConversionFactor(200/178.88);
+    leftFollowerEncoder2.setVelocityConversionFactor(200/178.88);
     
 
     //leftFollower1.follow(leftMaster);
@@ -130,11 +137,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftEncoders() {
-    return ((leftMasterEncoder.getPosition() + /*leftFollowerEncoder1.getPosition()*/ + leftFollowerEncoder2.getPosition())/3) * 200/178.88;
+    return ((leftMasterEncoder.getPosition() + /*leftFollowerEncoder1.getPosition()*/ + leftFollowerEncoder2.getPosition())/2);
   }
 
   public double getRightEncoders() {
-    return ((-rightMasterEncoder.getPosition() + -/*ghtFollowerEncoder1.getPosition()*/ + -rightFollowerEncoder2.getPosition())/3) * 200/178.88;
+    return ((-rightMasterEncoder.getPosition() /*-rightFollowerEncoder1.getPosition()*/ + -rightFollowerEncoder2.getPosition())/2);
   }
 
   public void allowDrive(boolean allow) {
@@ -149,13 +156,19 @@ public class Drivetrain extends SubsystemBase {
   }
   public void resetEncoders() {
     leftFollowerEncoder2.setPosition(0);
-    leftFollowerEncoder1.setPosition(0);
+    //leftFollowerEncoder1.setPosition(0);
     leftMasterEncoder.setPosition(0);
     rightFollowerEncoder2.setPosition(0);
-    rightFollowerEncoder1.setPosition(0);
+    //rightFollowerEncoder1.setPosition(0);
     rightMasterEncoder.setPosition(0);
   }
   public double getVelocity() {
-    return ((leftMasterEncoder.getVelocity() + rightMasterEncoder.getVelocity()) / 2) * 200/178.88;
+    return ((leftMasterEncoder.getVelocity() + rightMasterEncoder.getVelocity()) / 2);
+  }
+  public double getLeftVelocity() {
+    return leftMasterEncoder.getVelocity();
+  }
+  public double getRightVelocity() {
+    return rightMasterEncoder.getVelocity();
   }
 }

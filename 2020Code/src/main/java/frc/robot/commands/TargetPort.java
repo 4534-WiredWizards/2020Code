@@ -35,7 +35,7 @@ public class TargetPort extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(0);
+    frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(3);
     angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew();
     frc.robot.RobotContainer.ShooterLimelightT.setPipeline(1);
     time = System.currentTimeMillis();
@@ -54,14 +54,14 @@ public class TargetPort extends CommandBase {
     // //frc.robot.RobotContainer.ShooterT.setShooterSpeed(distance * 2 / 20); //needs testing for equation
     if(System.currentTimeMillis() > time + 1000) {
       turretAngle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew();
-      if (Math.abs(turretAngle) > 0.1) frc.robot.RobotContainer.ShooterT.setTurretSpeed(turretAngle * 0.1);
+      if (Math.abs(turretAngle) > 0.1) frc.robot.RobotContainer.ShooterT.setTurretSpeed(turretAngle * -0.1);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(1);
+    frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(0);
     frc.robot.RobotContainer.ShooterT.setTurretSpeed(0);
     frc.robot.RobotContainer.ShooterT.setShooterSpeed(0);
     frc.robot.RobotContainer.ShooterLimelightT.setPipeline(0);
