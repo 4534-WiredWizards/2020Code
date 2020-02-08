@@ -26,7 +26,7 @@ public class Updog extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    frc.robot.RobotContainer.LightsT.setLedPattern("blink", 127, 0, 0, 1, 1);
+    //frc.robot.RobotContainer.LightsT.setLedPattern("blink", 127, 0, 0, 1, 1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

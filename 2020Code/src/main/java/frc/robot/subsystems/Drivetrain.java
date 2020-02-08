@@ -48,6 +48,7 @@ public class Drivetrain extends SubsystemBase {
   double rotationScale = 0;
   //Direct driving varibles
   boolean drivingEnabled = true;
+  double encoderFactor = 268/182.1;
   
   /**
    * Creates a new ExampleSubsystem.
@@ -56,8 +57,8 @@ public class Drivetrain extends SubsystemBase {
     rightMaster = new CANSparkMax(10, MotorType.kBrushless);
     rightMaster.setInverted(true);
     rightMasterEncoder = rightMaster.getEncoder();
-    rightMasterEncoder.setPositionConversionFactor(200/178.88);
-    rightMasterEncoder.setVelocityConversionFactor(200/178.88);
+    rightMasterEncoder.setPositionConversionFactor(encoderFactor);
+    rightMasterEncoder.setVelocityConversionFactor(encoderFactor);
     // rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
     // rightFollower1.setInverted(true);
     // rightFollowerEncoder1 = rightFollower1.getEncoder();
@@ -65,26 +66,26 @@ public class Drivetrain extends SubsystemBase {
     rightFollower2 = new CANSparkMax(12, MotorType.kBrushless);
     rightFollower2.setInverted(true);
     rightFollowerEncoder2 = rightFollower2.getEncoder();
-    rightFollowerEncoder2.setPositionConversionFactor(200/178.88);
-    rightFollowerEncoder2.setVelocityConversionFactor(200/178.88);
+    rightFollowerEncoder2.setPositionConversionFactor(encoderFactor);
+    rightFollowerEncoder2.setVelocityConversionFactor(encoderFactor);
 
 
 
     leftMaster = new CANSparkMax(13, MotorType.kBrushless);
     leftMaster.setInverted(true);
     leftMasterEncoder = leftMaster.getEncoder();
-    leftMasterEncoder.setPositionConversionFactor(200/178.88);
-    leftMasterEncoder.setVelocityConversionFactor(200/178.88);
+    leftMasterEncoder.setPositionConversionFactor(encoderFactor);
+    leftMasterEncoder.setVelocityConversionFactor(encoderFactor);
     
     // leftFollower1 = new CANSparkMax(13, MotorType.kBrushless);
-    // leftFollower1.setInverted(true);
+    // leftFollower1.setInverted(false);
     // leftFollowerEncoder1 = leftFollower1.getEncoder();
 
     leftFollower2 = new CANSparkMax(15, MotorType.kBrushless);
-    leftFollower2.setInverted(true);
+    leftFollower2.setInverted(false);
     leftFollowerEncoder2 = leftFollower2.getEncoder();
-    leftFollowerEncoder2.setPositionConversionFactor(200/178.88);
-    leftFollowerEncoder2.setVelocityConversionFactor(200/178.88);
+    leftFollowerEncoder2.setPositionConversionFactor(encoderFactor);
+    leftFollowerEncoder2.setVelocityConversionFactor(encoderFactor);
     
 
     //leftFollower1.follow(leftMaster);
@@ -94,7 +95,7 @@ public class Drivetrain extends SubsystemBase {
     
     diffDrive = new DifferentialDrive(leftMaster, rightMaster);
     addChild("DiffDrive", diffDrive);
-    diffDrive.setSafetyEnabled(true);
+    diffDrive.setSafetyEnabled(false);
     diffDrive.setExpiration(0.1);
     diffDrive.setMaxOutput(1.0);
   }

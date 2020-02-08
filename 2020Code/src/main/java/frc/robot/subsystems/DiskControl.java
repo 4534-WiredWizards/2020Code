@@ -25,7 +25,7 @@ public class DiskControl extends SubsystemBase {
     TalonSRX diskWheel = new TalonSRX(20);
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
 
-    private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+    //private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
 
     // SendableChooser<Integer> colorChooser = new SendableChooser<Integer>();
 
@@ -45,7 +45,8 @@ public class DiskControl extends SubsystemBase {
   @Override
   public void periodic() {
     if(DebugConstants.debugMode) {
-      Color detectedColor = m_colorSensor.getColor();
+      //Color detectedColor = m_colorSensor.getColor();
+      Color detectedColor = null;
       SmartDashboard.putNumber("Red", detectedColor.red);
       SmartDashboard.putNumber("Green", detectedColor.green);
       SmartDashboard.putNumber("Blue", detectedColor.blue);
@@ -56,7 +57,7 @@ public class DiskControl extends SubsystemBase {
     }
   }
   public Color senseColor(){
-    return m_colorSensor.getColor();
+    return null;//m_colorSensor.getColor();
   
   }
   public void DiskMotorController(double speed){

@@ -24,7 +24,7 @@ public class DriveDistance extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   double m_distance = 0;
-  PIDController pid = new PIDController(0.05, 0.01, 0);
+  PIDController pid = new PIDController(0.03, 0.001, 0);
   public DriveDistance(double distance) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.DrivetrainT);
@@ -42,7 +42,7 @@ public class DriveDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage(), m_distance), -0.4, 0.4), 0);
+    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage(), m_distance), -0.6, 0.6), 0);
     SmartDashboard.putNumber("Off", frc.robot.RobotContainer.DrivetrainT.getEncoderAverage());
   }
 

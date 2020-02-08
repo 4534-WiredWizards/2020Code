@@ -23,7 +23,7 @@ public class TurnAngle extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   double m_distance;
-  PIDController pid = new PIDController(0.02, 0.009, 0.00);
+  PIDController pid = new PIDController(0.011, 0.00, 0.00);
   public TurnAngle(double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.DrivetrainT);
@@ -33,7 +33,7 @@ public class TurnAngle extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pid.setTolerance(3, 10);
+    pid.setTolerance(5, 10);
     frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
     frc.robot.RobotContainer.NavxT.resetHeading();
     m_distance = m_distance + frc.robot.RobotContainer.NavxT.getHeading();

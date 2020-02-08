@@ -35,7 +35,7 @@ public class RobotContainer {
   public static Climb ClimbT = new Climb();
   public static Shooter ShooterT = new Shooter();
   public static BallLimelight BallLimelightT = new BallLimelight();
-  public static Lights LightsT = new Lights();
+  //public static Lights LightsT = new Lights();
 
   public static XboxController m_driverController = new XboxController(0);
  
@@ -64,7 +64,7 @@ public class RobotContainer {
 
     //a.whenPressed(new GoToColor());
     //b.whenPressed(new SpinTimes());
-    x.whenPressed(new DriveArc(50,90));
+    x.whenPressed(new AutoTest());
     y.toggleWhenPressed(new TargetPort());
   }
 
@@ -76,6 +76,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new AutoTest();
   }
 }

@@ -45,8 +45,8 @@ public class DriveWithJoystick extends CommandBase {
     rotation = Math.abs(frc.robot.RobotContainer.m_driverController.getRawAxis(4)) >= innerBound ? frc.robot.RobotContainer.m_driverController.getRawAxis(4) : 0;
     //Go into slow speed mode if left bumper is pressed, slow rotation mode if right bumper is pressed
     speed = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kLeft) ? speed * 0.5 : speed;
-    rotation = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kRight) ? rotation * 0.4 : rotation * 0.6;
-    if (Math.abs(speed) > 0.1) rotation = rotation * 1.5;
+    rotation = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kRight) ? rotation * 0.3 : rotation * 0.5;
+    if (Math.abs(speed) > 0.1) rotation = rotation * 1.2;
     //Descrease speed to 0.85 normal speed, add extra 0.15 from left trigger.
     if (speed < 0) speed = speed * 0.85 - 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);
     else speed = speed * 0.85 + 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);

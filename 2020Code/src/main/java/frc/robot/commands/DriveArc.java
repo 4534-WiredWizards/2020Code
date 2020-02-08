@@ -25,10 +25,10 @@ public class DriveArc extends CommandBase {
    */
   double m_radius = 0;
   double m_angle = 0;
-  double wheelDistance = 27.0;
+  double wheelDistance = 21.0;
   double output;
   double target;
-  PIDController pid = new PIDController(0.001, 0, 0);
+  PIDController pid = new PIDController(0.0000003, 0, 0);
   public DriveArc(double radius, double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.DrivetrainT);
@@ -43,7 +43,7 @@ public class DriveArc extends CommandBase {
     pid.setTolerance(2, 10);
     frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
     frc.robot.RobotContainer.DrivetrainT.resetEncoders();
-    output = 0.6 / (m_radius+27/2) * (m_radius-27/2);
+    output = 0.6 / (m_radius+wheelDistance/2) * (m_radius-wheelDistance/2);
     SmartDashboard.putNumber("ArcStage", 2);
   }
 
@@ -76,6 +76,6 @@ public class DriveArc extends CommandBase {
   public boolean isFinished() {
     SmartDashboard.putNumber("Goal", m_radius * Math.PI * 2 * m_angle/360);
     SmartDashboard.putNumber("At", frc.robot.RobotContainer.DrivetrainT.getEncoderAverage());
-    return Math.abs(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage()) >= m_radius * Math.PI * 2 * m_angle/360;
+    return Math.abs(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage()) >= m_radius * Math.PI * 2 * Math.abs(m_angle)/360;
   }
 }
