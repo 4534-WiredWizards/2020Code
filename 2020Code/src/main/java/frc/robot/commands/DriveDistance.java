@@ -37,12 +37,13 @@ public class DriveDistance extends CommandBase {
     pid.setTolerance(2, 10);
     frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
     frc.robot.RobotContainer.DrivetrainT.resetEncoders();
+    frc.robot.RobotContainer.NavxT.resetHeading();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage(), m_distance), -0.6, 0.6), 0);
+    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage(), m_distance), -0.6, 0.6), frc.robot.RobotContainer.NavxT.getHeading() * 0.1);
     SmartDashboard.putNumber("Off", frc.robot.RobotContainer.DrivetrainT.getEncoderAverage());
   }
 

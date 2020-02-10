@@ -30,11 +30,11 @@ public class Shooter extends SubsystemBase {
   CANSparkMax Turret = new CANSparkMax(19, MotorType.kBrushless);
   CANEncoder TurretEncoder = Turret.getEncoder();
   PIDController pid = new PIDController(0.00007, 0, 0);
-  boolean passedTarget = false;
   double output = 0;
   double total = 0;
   int count = 0;
-  double[] bepis;
+  double[] rollingAverage = {0,0,0,0,0};
+  int pointer = 0;
   public Shooter() {
     Shoot2.follow(Shoot1);
     Shoot2.setInverted(false);
@@ -44,20 +44,17 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    int target = -235;
     if(frc.robot.RobotContainer.m_joystick.getRawButton(2)){
-      // SmartDashboard.putBoolean("truefalse", output > target / 450.0);
-      // if(output > target / 450.0 && !passedTarget){
-      //   output = Math.pow(target / -450.0, 1.3);
-      // }
-      // else{
-      //   output -= pid.calculate(ShootEncoder.getRate(), target);
-      // }
-      // setShooterSpeed(output);
-      // if(ShootEncoder.getRate() < target){
-      //   passedTarget=true;
-      // }
-      setShooterSpeed(0.8);
+      rollingAverage[pointer] = ShootEncoder.getRate();
+      pointer = (pointer + 1) % 4;
+      double average = (rollingAverage[0] + rollingAverage[1] + rollingAverage[2] + rollingAverage[3] + rollingAverage[4]) / 5;
+      if(average > -450){
+        output = 1;
+      }
+      else{
+        output = 0.8;
+      }
+      setShooterSpeed(output);
       if(frc.robot.RobotContainer.m_joystick.getRawButton(3)){
         total = total + ShootEncoder.getRate();
         count++;
@@ -67,7 +64,6 @@ public class Shooter extends SubsystemBase {
     else {
       output = 0;
       setShooterSpeed(0);
-      passedTarget = false;
     }
     SmartDashboard.putNumber("Shooter Output", output);
     setTurretSpeed(-frc.robot.RobotContainer.m_joystick.getRawAxis(0));
