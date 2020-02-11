@@ -36,8 +36,8 @@ public class Drivetrain extends SubsystemBase {
         rightFollowerJPLT.setInverted(InvertType.OpposeMaster);
         leftFollowerJPLV.setInverted(InvertType.FollowMaster);
         rightFollowerJPLV.setInverted(InvertType.FollowMaster);
-        leftMasterJPL.configOpenloopRamp(0.5, 0);
-        rightMasterJPL.configOpenloopRamp(0.5, 0);
+        leftMasterJPL.configOpenloopRamp(0.2, 0);
+        rightMasterJPL.configOpenloopRamp(0.2, 0);
         leftMasterJPL.configPeakCurrentDuration(100, 10);
         rightMasterJPL.configPeakCurrentDuration(100, 10);
         leftMasterJPL.configContinuousCurrentLimit(27, 10);
