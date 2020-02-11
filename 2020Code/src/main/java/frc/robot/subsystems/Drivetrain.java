@@ -14,8 +14,6 @@ public class Drivetrain extends SubsystemBase {
     private WPI_TalonSRX rightFollowerJPLT;
     private WPI_VictorSPX leftFollowerJPLV;
     private WPI_VictorSPX rightFollowerJPLV;
-    private Double workingSpeed = 0.85;
-    private Double maxSpeed = workingSpeed;
 
     public Drivetrain() {
         leftMasterJPL = new WPI_TalonSRX(0);
@@ -51,11 +49,11 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void ArcadeDrive(double speed, double rotation) {
-        deltaD.arcadeDrive(speed*maxSpeed, rotation*maxSpeed, true);
+        deltaD.arcadeDrive(speed, rotation, true);
     }
 
     public void TankDrive(double leftSpeed, double rightSpeed) {
-        deltaD.tankDrive(leftSpeed*maxSpeed, rightSpeed*maxSpeed);
+        deltaD.tankDrive(leftSpeed, rightSpeed);
     }
     public void resetMotorControllers(){
         leftMasterJPL.configFactoryDefault();
