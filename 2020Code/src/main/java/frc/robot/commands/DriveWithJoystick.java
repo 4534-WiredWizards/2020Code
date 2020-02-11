@@ -44,23 +44,23 @@ public class DriveWithJoystick extends CommandBase {
     speed = Math.abs(frc.robot.RobotContainer.m_driverController.getRawAxis(1)) >= innerBound ? frc.robot.RobotContainer.m_driverController.getRawAxis(1) : 0;
     rotation = Math.abs(frc.robot.RobotContainer.m_driverController.getRawAxis(4)) >= innerBound ? frc.robot.RobotContainer.m_driverController.getRawAxis(4) : 0;
     //Go into slow speed mode if left bumper is pressed, slow rotation mode if right bumper is pressed
-    speed = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kLeft) ? speed * 0.5 : speed;
-    rotation = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kRight) ? rotation * 0.3 : rotation * 0.5;
+    speed = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kLeft) ? speed * 0.6 : speed;
+    rotation = frc.robot.RobotContainer.m_driverController.getBumper(Hand.kRight) ? rotation * 0.6 : rotation * 0.8;
     if (Math.abs(speed) > 0.1) rotation = rotation * 1.2;
     //Descrease speed to 0.85 normal speed, add extra 0.15 from left trigger.
     if (speed < 0) speed = speed * 0.85 - 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);
     else speed = speed * 0.85 + 0.15 * frc.robot.RobotContainer.m_driverController.getRawAxis(2);
     //Only move if allowed to.
-    if (frc.robot.RobotContainer.DrivetrainT.isDrivingAllowed() == true) {
-        if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) > 0.1) frc.robot.RobotContainer.DrivetrainT.arcadeDrive(speed, rotation);
-        if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) < 0.1) frc.robot.RobotContainer.DrivetrainT.arcadeDrive(-speed, rotation);
+    if (true) {
+        if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) > 0.1) frc.robot.RobotContainer.DrivetrainT.ArcadeDrive(speed, rotation);
+        if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) < 0.1) frc.robot.RobotContainer.DrivetrainT.ArcadeDrive(-speed, rotation);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    frc.robot.RobotContainer.DrivetrainT.tankDrive(0,0);
+    frc.robot.RobotContainer.DrivetrainT.TankDrive(0,0);
   }
 
   // Returns true when the command should end.

@@ -26,20 +26,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   public static Drivetrain DrivetrainT = new Drivetrain();
-  public static Pneumatics PneumaticsT = new Pneumatics();
-  public static ShooterLimelight ShooterLimelightT = new ShooterLimelight();
-  public static DiskControl DiskControlT = new DiskControl();
-  public static Navx NavxT = new Navx();
-  public static Intake IntakeT = new Intake();
-  public static Indexer IndexerT = new Indexer();
-  public static Climb ClimbT = new Climb();
-  public static Shooter ShooterT = new Shooter();
-  public static BallLimelight BallLimelightT = new BallLimelight();
-  //public static Lights LightsT = new Lights();
-
   public static XboxController m_driverController = new XboxController(0);
- 
-  public static Joystick m_joystick = new Joystick(1);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -58,14 +45,6 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //final JoystickButton a = new JoystickButton(m_joystick, 1);
-    //final JoystickButton b = new JoystickButton(m_joystick, 2);
-    final JoystickButton x = new JoystickButton(m_joystick, 3);
-    final JoystickButton y = new JoystickButton(m_joystick, 4);
-
-    //a.whenPressed(new GoToColor());
-    //b.whenPressed(new SpinTimes());
-    x.whenPressed(new AutoTest());
-    y.toggleWhenPressed(new TargetPort());
   }
 
 
@@ -76,6 +55,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new AutoTest();
+    return null;
   }
 }

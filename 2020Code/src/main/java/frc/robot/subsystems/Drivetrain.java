@@ -1,175 +1,78 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import edu.wpi.first.wpilibj.GenericHID.Hand;
-// import edu.wpi.first.wpilibj.Solenoid;
-// import edu.wpi.first.wpilibj.Spark;
-// import edu.wpi.first.wpilibj.SpeedController;
 
 public class Drivetrain extends SubsystemBase {
-  private CANSparkMax rightMaster;
-  private CANEncoder rightMasterEncoder;
-  //private CANSparkMax rightFollower1;
-  //private CANEncoder rightFollowerEncoder1;
-  private CANSparkMax rightFollower2;
-  private CANEncoder rightFollowerEncoder2;
-  
-  private CANSparkMax leftMaster;
-  private CANEncoder leftMasterEncoder;
-  //private CANSparkMax leftFollower1;
-  //private CANEncoder leftFollowerEncoder1;
-  private CANSparkMax leftFollower2;
-  private CANEncoder leftFollowerEncoder2;
+    private WPI_TalonSRX leftMasterJPL;
+    private WPI_TalonSRX rightMasterJPL;
+    private DifferentialDrive deltaD;
+    private WPI_TalonSRX leftFollowerJPLT;
+    private WPI_TalonSRX rightFollowerJPLT;
+    private WPI_VictorSPX leftFollowerJPLV;
+    private WPI_VictorSPX rightFollowerJPLV;
+    private Double workingSpeed = 0.85;
+    private Double maxSpeed = workingSpeed;
 
-  private DifferentialDrive diffDrive;
-
-  double workingSpeed = 1;
-  double demoSpeed = 0.5;
-  boolean demoMode = false;
-  protected double innerBound = 0.05;
-  // Change motor speed by this variable every loop (typically 20ms)
-  double stepSize = 0.1;
-  double maxSpeed = workingSpeed;
-  double lastSpeed = 0;
-  //Arcade drive scaling
-  double driveScale = 0;
-  double rotationScale = 0;
-  //Direct driving varibles
-  boolean drivingEnabled = true;
-  double encoderFactor = 268/182.1;
-  
-  /**
-   * Creates a new ExampleSubsystem.
-   */
-  public Drivetrain() {
-    rightMaster = new CANSparkMax(10, MotorType.kBrushless);
-    rightMaster.setInverted(true);
-    rightMasterEncoder = rightMaster.getEncoder();
-    rightMasterEncoder.setPositionConversionFactor(encoderFactor);
-    rightMasterEncoder.setVelocityConversionFactor(encoderFactor);
-    // rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
-    // rightFollower1.setInverted(true);
-    // rightFollowerEncoder1 = rightFollower1.getEncoder();
-
-    rightFollower2 = new CANSparkMax(12, MotorType.kBrushless);
-    rightFollower2.setInverted(true);
-    rightFollowerEncoder2 = rightFollower2.getEncoder();
-    rightFollowerEncoder2.setPositionConversionFactor(encoderFactor);
-    rightFollowerEncoder2.setVelocityConversionFactor(encoderFactor);
-
-
-
-    leftMaster = new CANSparkMax(13, MotorType.kBrushless);
-    leftMaster.setInverted(true);
-    leftMasterEncoder = leftMaster.getEncoder();
-    leftMasterEncoder.setPositionConversionFactor(encoderFactor);
-    leftMasterEncoder.setVelocityConversionFactor(encoderFactor);
-    
-    // leftFollower1 = new CANSparkMax(13, MotorType.kBrushless);
-    // leftFollower1.setInverted(false);
-    // leftFollowerEncoder1 = leftFollower1.getEncoder();
-
-    leftFollower2 = new CANSparkMax(15, MotorType.kBrushless);
-    leftFollower2.setInverted(false);
-    leftFollowerEncoder2 = leftFollower2.getEncoder();
-    leftFollowerEncoder2.setPositionConversionFactor(encoderFactor);
-    leftFollowerEncoder2.setVelocityConversionFactor(encoderFactor);
-    
-
-    //leftFollower1.follow(leftMaster);
-    leftFollower2.follow(leftMaster);
-    //rightFollower1.follow(rightMaster);
-    rightFollower2.follow(rightMaster);
-    
-    diffDrive = new DifferentialDrive(leftMaster, rightMaster);
-    addChild("DiffDrive", diffDrive);
-    diffDrive.setSafetyEnabled(false);
-    diffDrive.setExpiration(0.1);
-    diffDrive.setMaxOutput(1.0);
-  }
-
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Encoders", getLeftEncoders());
-    SmartDashboard.putNumber("Right Encoders", getRightEncoders());
-    SmartDashboard.putNumber("Avg Encoders", getEncoderAverage());
-  }
-
-  public void arcadeDrive(double speed, double rotation) {
-    diffDrive.arcadeDrive(speed*maxSpeed, rotation*maxSpeed, true);
-    lastSpeed = speed;
-  }
-
-  public void arcadeDriveScaled(double speed, double rotation) {
-    diffDrive.arcadeDrive((speed*maxSpeed) * (1 - driveScale) + driveScale, (rotation*maxSpeed)* (1 - rotationScale) + rotationScale, true);
-    lastSpeed = speed;
-  }
-
-  public void tankDrive(double leftSpeed, double rightSpeed) {
-    diffDrive.tankDrive(leftSpeed, rightSpeed);
-  }
-
-  public void setDemoMode(boolean newDemoMode) {
-    demoMode = newDemoMode;
-    if (demoMode == true) {
-        maxSpeed = demoSpeed;
-    } else {
-        maxSpeed = workingSpeed;
+    public Drivetrain() {
+        leftMasterJPL = new WPI_TalonSRX(0);
+        rightMasterJPL = new WPI_TalonSRX(1);
+        deltaD = new DifferentialDrive(leftMasterJPL, rightMasterJPL);
+        deltaD.setSafetyEnabled(true);
+        deltaD.setExpiration(0.1);
+        deltaD.setMaxOutput(1.0);
+        leftFollowerJPLT = new WPI_TalonSRX(2);
+        rightFollowerJPLT = new WPI_TalonSRX(3);
+        leftFollowerJPLV = new WPI_VictorSPX(4);
+        rightFollowerJPLV = new WPI_VictorSPX(5);
+        leftFollowerJPLT.follow(leftMasterJPL);
+        leftFollowerJPLV.follow(leftMasterJPL);
+        rightFollowerJPLT.follow(rightMasterJPL);
+        rightFollowerJPLV.follow(rightMasterJPL);
+        leftMasterJPL.setInverted(false);
+        rightMasterJPL.setInverted(false);
+        leftFollowerJPLT.setInverted(InvertType.OpposeMaster);
+        rightFollowerJPLT.setInverted(InvertType.OpposeMaster);
+        leftFollowerJPLV.setInverted(InvertType.FollowMaster);
+        rightFollowerJPLV.setInverted(InvertType.FollowMaster);
+        leftMasterJPL.configOpenloopRamp(0.5, 0);
+        rightMasterJPL.configOpenloopRamp(0.5, 0);
+        leftMasterJPL.configPeakCurrentDuration(100, 10);
+        rightMasterJPL.configPeakCurrentDuration(100, 10);
+        leftMasterJPL.configContinuousCurrentLimit(27, 10);
+        rightMasterJPL.configContinuousCurrentLimit(27, 10);
     }
-    return;
-  }
 
-  public double setMaxSpeed() {
-    return maxSpeed;
-  }
+    @Override
+    public void periodic() {
+        // Put code here to be run every loop
 
-  public double getLeftEncoders() {
-    return ((leftMasterEncoder.getPosition() + /*leftFollowerEncoder1.getPosition()*/ + leftFollowerEncoder2.getPosition())/2);
-  }
+    }
 
-  public double getRightEncoders() {
-    return ((-rightMasterEncoder.getPosition() /*-rightFollowerEncoder1.getPosition()*/ + -rightFollowerEncoder2.getPosition())/2);
-  }
+    // BEGIN AUTOGENERATED CODE, SOURCE=ROBOTBUILDER ID=CMDPIDGETTERS
 
-  public void allowDrive(boolean allow) {
-    drivingEnabled = allow;
-  }
 
-  public boolean isDrivingAllowed() {
-    return drivingEnabled;
-  }
-  public double getEncoderAverage() {
-    return (getRightEncoders() + getLeftEncoders() / 2);
-  }
-  public void resetEncoders() {
-    leftFollowerEncoder2.setPosition(0);
-    //leftFollowerEncoder1.setPosition(0);
-    leftMasterEncoder.setPosition(0);
-    rightFollowerEncoder2.setPosition(0);
-    //rightFollowerEncoder1.setPosition(0);
-    rightMasterEncoder.setPosition(0);
-  }
-  public double getVelocity() {
-    return ((leftMasterEncoder.getVelocity() + rightMasterEncoder.getVelocity()) / 2);
-  }
-  public double getLeftVelocity() {
-    return leftMasterEncoder.getVelocity();
-  }
-  public double getRightVelocity() {
-    return rightMasterEncoder.getVelocity();
-  }
+    // END AUTOGENERATED CODE, SOURCE=ROBOTBUILDER ID=CMDPIDGETTERS
+
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
+
+    public void ArcadeDrive(double speed, double rotation) {
+        deltaD.arcadeDrive(speed*maxSpeed, rotation*maxSpeed, true);
+    }
+
+    public void TankDrive(double leftSpeed, double rightSpeed) {
+        deltaD.tankDrive(leftSpeed*maxSpeed, rightSpeed*maxSpeed);
+    }
+    public void resetMotorControllers(){
+        leftMasterJPL.configFactoryDefault();
+        rightMasterJPL.configFactoryDefault();
+        leftFollowerJPLT.configFactoryDefault();
+        rightFollowerJPLT.configFactoryDefault();
+        leftFollowerJPLV.configFactoryDefault();
+        rightFollowerJPLV.configFactoryDefault();
+    }
 }
