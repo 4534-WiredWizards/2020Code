@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.Servo;
 
 public class Drivetrain extends SubsystemBase {
     private WPI_TalonSRX leftMasterJPL;
@@ -14,6 +15,7 @@ public class Drivetrain extends SubsystemBase {
     private WPI_TalonSRX rightFollowerJPLT;
     private WPI_VictorSPX leftFollowerJPLV;
     private WPI_VictorSPX rightFollowerJPLV;
+    private Servo hood;
 
     public Drivetrain() {
         leftMasterJPL = new WPI_TalonSRX(0);
@@ -42,10 +44,13 @@ public class Drivetrain extends SubsystemBase {
         rightMasterJPL.configPeakCurrentDuration(100, 10);
         leftMasterJPL.configContinuousCurrentLimit(27, 10);
         rightMasterJPL.configContinuousCurrentLimit(27, 10);
+        hood = new Servo(0);
+        hood.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
     }
 
     @Override
     public void periodic() {
+        hood.setPosition(frc.robot.RobotContainer.m_driverController.getRawAxis(3));
     }
 
     public void ArcadeDrive(double speed, double rotation) {
