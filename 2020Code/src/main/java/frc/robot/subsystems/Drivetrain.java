@@ -21,15 +21,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Drivetrain extends SubsystemBase {
   private CANSparkMax rightMaster;
   private CANEncoder rightMasterEncoder;
-  //private CANSparkMax rightFollower1;
-  //private CANEncoder rightFollowerEncoder1;
+  private CANSparkMax rightFollower1;
+  private CANEncoder rightFollowerEncoder1;
   private CANSparkMax rightFollower2;
   private CANEncoder rightFollowerEncoder2;
   
   private CANSparkMax leftMaster;
   private CANEncoder leftMasterEncoder;
-  //private CANSparkMax leftFollower1;
-  //private CANEncoder leftFollowerEncoder1;
+  private CANSparkMax leftFollower1;
+  private CANEncoder leftFollowerEncoder1;
   private CANSparkMax leftFollower2;
   private CANEncoder leftFollowerEncoder2;
 
@@ -59,9 +59,12 @@ public class Drivetrain extends SubsystemBase {
     rightMasterEncoder = rightMaster.getEncoder();
     rightMasterEncoder.setPositionConversionFactor(encoderFactor);
     rightMasterEncoder.setVelocityConversionFactor(encoderFactor);
-    // rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
-    // rightFollower1.setInverted(true);
-    // rightFollowerEncoder1 = rightFollower1.getEncoder();
+
+    rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
+    rightFollower1.setInverted(true);
+    rightFollowerEncoder1 = rightFollower1.getEncoder();
+    rightFollowerEncoder1.setPositionConversionFactor(encoderFactor);
+    rightFollowerEncoder1.setVelocityConversionFactor(encoderFactor);
 
     rightFollower2 = new CANSparkMax(12, MotorType.kBrushless);
     rightFollower2.setInverted(true);
@@ -71,26 +74,28 @@ public class Drivetrain extends SubsystemBase {
 
 
 
-    leftMaster = new CANSparkMax(13, MotorType.kBrushless);
+    leftMaster = new CANSparkMax(15, MotorType.kBrushless);
     leftMaster.setInverted(true);
     leftMasterEncoder = leftMaster.getEncoder();
     leftMasterEncoder.setPositionConversionFactor(encoderFactor);
     leftMasterEncoder.setVelocityConversionFactor(encoderFactor);
     
-    // leftFollower1 = new CANSparkMax(13, MotorType.kBrushless);
-    // leftFollower1.setInverted(false);
-    // leftFollowerEncoder1 = leftFollower1.getEncoder();
+    leftFollower1 = new CANSparkMax(14, MotorType.kBrushless);
+    leftFollower1.setInverted(true);
+    leftFollowerEncoder1 = leftFollower1.getEncoder();
+    leftFollowerEncoder1.setPositionConversionFactor(encoderFactor);
+    leftFollowerEncoder1.setVelocityConversionFactor(encoderFactor);
 
-    leftFollower2 = new CANSparkMax(15, MotorType.kBrushless);
-    leftFollower2.setInverted(false);
+    leftFollower2 = new CANSparkMax(13, MotorType.kBrushless);
+    leftFollower2.setInverted(true);
     leftFollowerEncoder2 = leftFollower2.getEncoder();
     leftFollowerEncoder2.setPositionConversionFactor(encoderFactor);
     leftFollowerEncoder2.setVelocityConversionFactor(encoderFactor);
     
 
-    //leftFollower1.follow(leftMaster);
+    leftFollower1.follow(leftMaster);
     leftFollower2.follow(leftMaster);
-    //rightFollower1.follow(rightMaster);
+    rightFollower1.follow(rightMaster);
     rightFollower2.follow(rightMaster);
     
     diffDrive = new DifferentialDrive(leftMaster, rightMaster);
@@ -110,6 +115,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double speed, double rotation) {
+    SmartDashboard.putNumber("Drive Speed", speed);
+    SmartDashboard.putNumber("Rot Speed", rotation);
     diffDrive.arcadeDrive(speed*maxSpeed, rotation*maxSpeed, true);
     lastSpeed = speed;
   }
@@ -138,11 +145,11 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getLeftEncoders() {
-    return ((leftMasterEncoder.getPosition() + /*leftFollowerEncoder1.getPosition()*/ + leftFollowerEncoder2.getPosition())/2);
+    return ((leftMasterEncoder.getPosition() + leftFollowerEncoder1.getPosition() + leftFollowerEncoder2.getPosition())/3);
   }
 
   public double getRightEncoders() {
-    return ((-rightMasterEncoder.getPosition() /*-rightFollowerEncoder1.getPosition()*/ + -rightFollowerEncoder2.getPosition())/2);
+    return ((-rightMasterEncoder.getPosition() - rightFollowerEncoder1.getPosition() - rightFollowerEncoder2.getPosition())/3);
   }
 
   public void allowDrive(boolean allow) {
@@ -157,10 +164,10 @@ public class Drivetrain extends SubsystemBase {
   }
   public void resetEncoders() {
     leftFollowerEncoder2.setPosition(0);
-    //leftFollowerEncoder1.setPosition(0);
+    leftFollowerEncoder1.setPosition(0);
     leftMasterEncoder.setPosition(0);
     rightFollowerEncoder2.setPosition(0);
-    //rightFollowerEncoder1.setPosition(0);
+    rightFollowerEncoder1.setPosition(0);
     rightMasterEncoder.setPosition(0);
   }
   public double getVelocity() {

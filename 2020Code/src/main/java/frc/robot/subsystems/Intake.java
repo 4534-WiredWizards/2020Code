@@ -21,13 +21,13 @@ public class Intake extends SubsystemBase {
   public Intake() {
     piston = new Solenoid(30, 1);
     addChild("piston", piston);
-    motor = new CANSparkMax(21, MotorType.kBrushless);
+    motor = new CANSparkMax(16, MotorType.kBrushless);
   }
 
   @Override
   public void periodic() {
     if(frc.robot.RobotContainer.m_joystick.getRawButton(2)) {
-      motor.set(-0.4);
+      motor.set(-0.6);
     }
     else {
       if(frc.robot.RobotContainer.m_joystick.getRawButton(3)) {

@@ -24,10 +24,10 @@ public class Shooter extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-  VictorSPX Shoot1 = new VictorSPX(17);
+  VictorSPX Shoot1 = new VictorSPX(19);
   VictorSPX Shoot2 = new VictorSPX(18);
   Encoder ShootEncoder = new Encoder(8, 9, false, EncodingType.k4X);
-  CANSparkMax Turret = new CANSparkMax(19, MotorType.kBrushless);
+  CANSparkMax Turret = new CANSparkMax(17, MotorType.kBrushless);
   CANEncoder TurretEncoder = Turret.getEncoder();
   PIDController pid = new PIDController(0.00007, 0, 0);
   double output = 0;
@@ -44,22 +44,22 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(frc.robot.RobotContainer.m_joystick.getRawButton(2)){
-      rollingAverage[pointer] = ShootEncoder.getRate();
-      pointer = (pointer + 1) % 4;
-      double average = (rollingAverage[0] + rollingAverage[1] + rollingAverage[2] + rollingAverage[3] + rollingAverage[4]) / 5;
-      if(average > -450){
-        output = 1;
-      }
-      else{
-        output = 0.8;
-      }
-      setShooterSpeed(output);
-      if(frc.robot.RobotContainer.m_joystick.getRawButton(3)){
-        total = total + ShootEncoder.getRate();
-        count++;
-        SmartDashboard.putNumber("Shooter Average", total / count);
-      }
+    if(frc.robot.RobotContainer.m_joystick.getRawButton(5)){
+      // rollingAverage[pointer] = ShootEncoder.getRate();
+      // pointer = (pointer + 1) % 4;
+      // double average = (rollingAverage[0] + rollingAverage[1] + rollingAverage[2] + rollingAverage[3] + rollingAverage[4]) / 5;
+      // if(average > -450){
+      //   output = 1;
+      // }
+      // else{
+      //   output = 0.8;
+      // }
+      setShooterSpeed(0.9);
+      // if(frc.robot.RobotContainer.m_joystick.getRawButton(3)){
+      //   total = total + ShootEncoder.getRate();
+      //   count++;
+      //   SmartDashboard.putNumber("Shooter Average", total / count);
+      // }
     }
     else {
       output = 0;

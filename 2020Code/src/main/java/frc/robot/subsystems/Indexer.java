@@ -15,7 +15,7 @@ public class Indexer extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-  TalonSRX indexMotor = new TalonSRX(16);
+  TalonSRX indexMotor = new TalonSRX(20);
   public Indexer() {
     
 
@@ -25,7 +25,7 @@ public class Indexer extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if(frc.robot.RobotContainer.m_joystick.getRawButton(1)) {
-      indexMotor.set(ControlMode.PercentOutput, -0.8);
+      indexMotor.set(ControlMode.PercentOutput, 0.8);
     }
     else {
       indexMotor.set(ControlMode.PercentOutput, 0);
