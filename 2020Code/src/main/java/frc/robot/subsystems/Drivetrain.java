@@ -59,38 +59,42 @@ public class Drivetrain extends SubsystemBase {
     rightMasterEncoder = rightMaster.getEncoder();
     rightMasterEncoder.setPositionConversionFactor(encoderFactor);
     rightMasterEncoder.setVelocityConversionFactor(encoderFactor);
+    rightMaster.setOpenLoopRampRate(0.1);
 
     rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
     rightFollower1.setInverted(true);
     rightFollowerEncoder1 = rightFollower1.getEncoder();
     rightFollowerEncoder1.setPositionConversionFactor(encoderFactor);
     rightFollowerEncoder1.setVelocityConversionFactor(encoderFactor);
+    rightFollower1.setOpenLoopRampRate(0.1);
 
     rightFollower2 = new CANSparkMax(12, MotorType.kBrushless);
     rightFollower2.setInverted(true);
     rightFollowerEncoder2 = rightFollower2.getEncoder();
     rightFollowerEncoder2.setPositionConversionFactor(encoderFactor);
     rightFollowerEncoder2.setVelocityConversionFactor(encoderFactor);
-
-
+    rightFollower2.setOpenLoopRampRate(0.1);
 
     leftMaster = new CANSparkMax(15, MotorType.kBrushless);
     leftMaster.setInverted(true);
     leftMasterEncoder = leftMaster.getEncoder();
     leftMasterEncoder.setPositionConversionFactor(encoderFactor);
     leftMasterEncoder.setVelocityConversionFactor(encoderFactor);
+    leftMaster.setOpenLoopRampRate(0.1);
     
     leftFollower1 = new CANSparkMax(14, MotorType.kBrushless);
     leftFollower1.setInverted(true);
     leftFollowerEncoder1 = leftFollower1.getEncoder();
     leftFollowerEncoder1.setPositionConversionFactor(encoderFactor);
     leftFollowerEncoder1.setVelocityConversionFactor(encoderFactor);
+    leftFollower1.setOpenLoopRampRate(0.1);
 
     leftFollower2 = new CANSparkMax(13, MotorType.kBrushless);
     leftFollower2.setInverted(true);
     leftFollowerEncoder2 = leftFollower2.getEncoder();
     leftFollowerEncoder2.setPositionConversionFactor(encoderFactor);
     leftFollowerEncoder2.setVelocityConversionFactor(encoderFactor);
+    leftFollower2.setOpenLoopRampRate(0.1);
     
 
     leftFollower1.follow(leftMaster);

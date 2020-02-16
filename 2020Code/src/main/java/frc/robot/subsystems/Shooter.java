@@ -12,25 +12,28 @@ import com.revrobotics.CANSparkMax;
 //import com.revrobotics.CANSparkMaxLowLevel;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.Servo;
 
 public class Shooter extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-  VictorSPX Shoot1 = new VictorSPX(19);
-  VictorSPX Shoot2 = new VictorSPX(18);
+  WPI_VictorSPX Shoot1 = new WPI_VictorSPX(19);
+  WPI_VictorSPX Shoot2 = new WPI_VictorSPX(18);
+  Servo Hood = new Servo(7);
   Encoder ShootEncoder = new Encoder(8, 9, false, EncodingType.k4X);
   CANSparkMax Turret = new CANSparkMax(17, MotorType.kBrushless);
   CANEncoder TurretEncoder = Turret.getEncoder();
   PIDController pid = new PIDController(0.00007, 0, 0);
   double output = 0;
+  double hoodSet = 0;
   double total = 0;
   int count = 0;
   double[] rollingAverage = {0,0,0,0,0};
@@ -38,12 +41,20 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     Shoot2.follow(Shoot1);
     Shoot2.setInverted(false);
+    Hood.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
     //Turret.setOpenLoopRampRate(5);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if (frc.robot.RobotContainer.m_joystick.getRawAxis(3) > 0.8 && hoodSet < 0.35){
+      hoodSet += 0.01;
+    }
+    if (frc.robot.RobotContainer.m_joystick.getRawAxis(2) > 0.8 && hoodSet > 0){
+      hoodSet -= 0.01;
+    }
+    Hood.setPosition(hoodSet);
     if(frc.robot.RobotContainer.m_joystick.getRawButton(5)){
       // rollingAverage[pointer] = ShootEncoder.getRate();
       // pointer = (pointer + 1) % 4;
@@ -54,7 +65,7 @@ public class Shooter extends SubsystemBase {
       // else{
       //   output = 0.8;
       // }
-      setShooterSpeed(0.9);
+      setShooterVoltage(9);
       // if(frc.robot.RobotContainer.m_joystick.getRawButton(3)){
       //   total = total + ShootEncoder.getRate();
       //   count++;
@@ -63,7 +74,7 @@ public class Shooter extends SubsystemBase {
     }
     else {
       output = 0;
-      setShooterSpeed(0);
+      setShooterVoltage(0);
     }
     SmartDashboard.putNumber("Shooter Output", output);
     setTurretSpeed(-frc.robot.RobotContainer.m_joystick.getRawAxis(0));
@@ -78,5 +89,8 @@ public class Shooter extends SubsystemBase {
   }
   public double getAngle() {
     return TurretEncoder.getPosition();
+  }
+  public void setShooterVoltage(double volt){
+    Shoot1.setVoltage(volt);
   }
 }

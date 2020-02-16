@@ -73,7 +73,7 @@ public class ShooterLimelight extends SubsystemBase {
         return ty.getDouble(0);
     }
     public boolean limelightHasTarget() {
-        if(tv.getDouble(0) == 1.0) return true;
+        if(tv.getDouble(0) > 0) return true;
         else return false;
     }
     public double getAreaPercent() {

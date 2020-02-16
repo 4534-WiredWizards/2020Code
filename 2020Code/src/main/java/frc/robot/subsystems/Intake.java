@@ -18,8 +18,9 @@ public class Intake extends SubsystemBase {
    */
   private CANSparkMax motor;
   private Solenoid piston;
+  boolean prevButton6 = false;
   public Intake() {
-    piston = new Solenoid(30, 1);
+    piston = new Solenoid(0, 4);
     addChild("piston", piston);
     motor = new CANSparkMax(16, MotorType.kBrushless);
   }
@@ -36,6 +37,11 @@ public class Intake extends SubsystemBase {
       else {
         motor.set(0);
       }
+    }
+    if(!frc.robot.RobotContainer.m_joystick.getRawButton(6)) prevButton6 = true;
+    if(frc.robot.RobotContainer.m_joystick.getRawButton(6) && prevButton6){
+      piston.set(!piston.get());
+      prevButton6 = false;
     }
   }
 }

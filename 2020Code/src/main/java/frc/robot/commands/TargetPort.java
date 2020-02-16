@@ -8,6 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * An example command that uses an example subsystem.
@@ -27,6 +29,7 @@ public class TargetPort extends CommandBase {
   double ballVelocity;
   double turretAngle;
   long time;
+  PIDController pid = new PIDController(0.1, 0, 0.0);
   public TargetPort() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.ShooterT);
@@ -45,16 +48,17 @@ public class TargetPort extends CommandBase {
   @Override
   public void execute() {
     // turretAngle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + frc.robot.RobotContainer.ShooterT.getAngle();
-    // distance = (Math.sqrt(frc.robot.RobotContainer.ShooterLimelightT.getArea()) / Math.sqrt(0.8)) * 20 * Math.sin(Math.toRadians(30)); //needs testing for equation
+    distance = (Math.sqrt(frc.robot.RobotContainer.ShooterLimelightT.getArea()) / Math.sqrt(0.618)) * 55.8752 * Math.sin(Math.toRadians(frc.robot.RobotContainer.ShooterLimelightT.getYSkew())); //needs testing for equation
+    SmartDashboard.putNumber("Distance to target", distance);
     // robotVelocity = frc.robot.RobotContainer.DrivetrainT.getVelocity();
     // ballVelocity = distance; //needs testing for equation
     // predictor = 0;//Math.asin((robotVelocity * Math.sin(Math.toRadians(turretAngle))) / ballVelocity);
     // angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + predictor;
     // if (Math.abs(angle) > 0.1) frc.robot.RobotContainer.ShooterT.setTurretSpeed(angle * 0.1); //needs testing for equation
     // //frc.robot.RobotContainer.ShooterT.setShooterSpeed(distance * 2 / 20); //needs testing for equation
-    if(System.currentTimeMillis() > time + 1000) {
-      turretAngle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew();
-      if (Math.abs(turretAngle) > 0.1) frc.robot.RobotContainer.ShooterT.setTurretSpeed(turretAngle * -0.1);
+    if(true) {
+      angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew();
+      if (Math.abs(angle) > 0.05) frc.robot.RobotContainer.ShooterT.setTurretSpeed(pid.calculate(angle, 0));
     }
   }
 
