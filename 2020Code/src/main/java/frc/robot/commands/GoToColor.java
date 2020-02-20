@@ -47,19 +47,16 @@ public class GoToColor extends CommandBase {
     else if (frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().blue && frc.robot.RobotContainer.DiskControlT.senseColor().blue > frc.robot.RobotContainer.DiskControlT.senseColor().red) detected = 3;
     else if (frc.robot.RobotContainer.DiskControlT.senseColor().red > frc.robot.RobotContainer.DiskControlT.senseColor().green && frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().blue || frc.robot.RobotContainer.DiskControlT.senseColor().green < 0.5) detected = 0;
     else if (frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().red && frc.robot.RobotContainer.DiskControlT.senseColor().red > frc.robot.RobotContainer.DiskControlT.senseColor().blue) detected = 1;
-    // if (detected != -1 && detected != (int)colorChooser.getSelected()) {
-    //   frc.robot.RobotContainer.DiskControlT.DiskMotorController(.2);
-    // }
     if (map[detected][(int)colorChooser.getSelected()].equals("CW")) {
-      frc.robot.RobotContainer.DiskControlT.DiskMotorController(-.25);
+      frc.robot.RobotContainer.IntakeT.setMotor(-.25);
     }
-    else frc.robot.RobotContainer.DiskControlT.DiskMotorController(.25);
+    else frc.robot.RobotContainer.IntakeT.setMotor(.25);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    frc.robot.RobotContainer.DiskControlT.DiskMotorController(0);
+    frc.robot.RobotContainer.IntakeT.setMotor(0);
       
   }
 

@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.util.Color;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.I2C;
-import com.ctre.phoenix.motorcontrol.*;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.Constants.DebugConstants;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -22,22 +20,11 @@ public class DiskControl extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-    TalonSRX diskWheel = new TalonSRX(21);
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
-
     private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
-
-    // SendableChooser<Integer> colorChooser = new SendableChooser<Integer>();
-
     private Solenoid piston;
 
   public DiskControl() {
-    diskWheel.set(ControlMode.PercentOutput, 0);
-    // colorChooser.addOption("Blue", 0);
-		// colorChooser.addOption("Green", 1);
-		// colorChooser.addOption("Red", 2);
-    // colorChooser.addOption("Yellow", 3);
-    // SmartDashboard.putData("Color Chooser", colorChooser);
     piston = new Solenoid(30, 2);
     addChild("piston", piston);
   }
@@ -55,11 +42,8 @@ public class DiskControl extends SubsystemBase {
       else if (detectedColor.green > detectedColor.red && detectedColor.red > detectedColor.blue) SmartDashboard.putString("DetectedColor", "Yellow");
     }
   }
+  
   public Color senseColor(){
     return m_colorSensor.getColor();
-  
-  }
-  public void DiskMotorController(double speed){
-    diskWheel.set(ControlMode.PercentOutput, speed);
   }
 }

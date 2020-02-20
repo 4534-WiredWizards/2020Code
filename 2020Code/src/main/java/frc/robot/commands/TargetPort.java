@@ -50,13 +50,12 @@ public class TargetPort extends CommandBase {
     // turretAngle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + frc.robot.RobotContainer.ShooterT.getAngle();
     distance = (Math.sqrt(frc.robot.RobotContainer.ShooterLimelightT.getArea()) / Math.sqrt(0.618)) * 55.8752 * Math.sin(Math.toRadians(frc.robot.RobotContainer.ShooterLimelightT.getYSkew())); //needs testing for equation
     SmartDashboard.putNumber("Distance to target", distance);
+    frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
     // robotVelocity = frc.robot.RobotContainer.DrivetrainT.getVelocity();
     // ballVelocity = distance; //needs testing for equation
     // predictor = 0;//Math.asin((robotVelocity * Math.sin(Math.toRadians(turretAngle))) / ballVelocity);
     // angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + predictor;
-    // if (Math.abs(angle) > 0.1) frc.robot.RobotContainer.ShooterT.setTurretSpeed(angle * 0.1); //needs testing for equation
-    // //frc.robot.RobotContainer.ShooterT.setShooterSpeed(distance * 2 / 20); //needs testing for equation
-    if(true) {
+    if(frc.robot.RobotContainer.ShooterLimelightT.limelightHasTarget() && frc.robot.RobotContainer.m_joystick.getRawButton(4)) {
       angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew();
       if (Math.abs(angle) > 0.05) frc.robot.RobotContainer.ShooterT.setTurretSpeed(pid.calculate(angle, 0));
     }
@@ -67,7 +66,7 @@ public class TargetPort extends CommandBase {
   public void end(boolean interrupted) {
     frc.robot.RobotContainer.ShooterLimelightT.setLEDMode(0);
     frc.robot.RobotContainer.ShooterT.setTurretSpeed(0);
-    frc.robot.RobotContainer.ShooterT.setShooterSpeed(0);
+    frc.robot.RobotContainer.ShooterT.setShooterVoltage(0);
     frc.robot.RobotContainer.ShooterLimelightT.setPipeline(0);
   }
 

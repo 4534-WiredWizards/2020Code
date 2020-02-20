@@ -34,7 +34,6 @@ public class RobotContainer {
   public static Indexer IndexerT = new Indexer();
   public static Climb ClimbT = new Climb();
   public static Shooter ShooterT = new Shooter();
-  public static BallLimelight BallLimelightT = new BallLimelight();
   //public static Lights LightsT = new Lights();
 
   public static XboxController m_driverController = new XboxController(0);
@@ -48,6 +47,9 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     DrivetrainT.setDefaultCommand(new DriveWithJoystick());
+    IntakeT.setDefaultCommand(new ControlIntake());
+    ShooterT.setDefaultCommand(new TurretWithJoystick());
+    IndexerT.setDefaultCommand(new ControlIndexer());
   }
 
   /**
@@ -60,12 +62,12 @@ public class RobotContainer {
     //final JoystickButton a = new JoystickButton(m_joystick, 1);
     //final JoystickButton b = new JoystickButton(m_joystick, 2);
     // final JoystickButton x = new JoystickButton(m_joystick, 3);
-    final JoystickButton y = new JoystickButton(m_joystick, 4);
+    final JoystickButton leftBumper = new JoystickButton(m_joystick, 4);
 
     //a.whenPressed(new GoToColor());
     //b.whenPressed(new SpinTimes());
     // x.whenPressed(new AutoTest());
-    y.toggleWhenPressed(new TargetPort());
+    leftBumper.toggleWhenPressed(new TargetPort());
   }
 
 

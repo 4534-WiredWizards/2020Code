@@ -12,7 +12,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.GenericHID.Hand;
 // import edu.wpi.first.wpilibj.Solenoid;
 // import edu.wpi.first.wpilibj.Spark;
@@ -113,14 +112,9 @@ public class Drivetrain extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Encoders", getLeftEncoders());
-    SmartDashboard.putNumber("Right Encoders", getRightEncoders());
-    SmartDashboard.putNumber("Avg Encoders", getEncoderAverage());
   }
 
   public void arcadeDrive(double speed, double rotation) {
-    SmartDashboard.putNumber("Drive Speed", speed);
-    SmartDashboard.putNumber("Rot Speed", rotation);
     diffDrive.arcadeDrive(speed*maxSpeed, rotation*maxSpeed, true);
     lastSpeed = speed;
   }

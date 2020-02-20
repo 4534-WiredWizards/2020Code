@@ -27,21 +27,14 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(frc.robot.RobotContainer.m_joystick.getRawButton(2)) {
-      motor.set(-0.6);
-    }
-    else {
-      if(frc.robot.RobotContainer.m_joystick.getRawButton(3)) {
-        motor.set(0.4);
-      }
-      else {
-        motor.set(0);
-      }
-    }
-    if(!frc.robot.RobotContainer.m_joystick.getRawButton(6)) prevButton6 = true;
-    if(frc.robot.RobotContainer.m_joystick.getRawButton(6) && prevButton6){
-      piston.set(!piston.get());
-      prevButton6 = false;
-    }
+  }
+  public void setMotor(double speed){
+    motor.set(speed);
+  }
+  public void setPiston(boolean state){
+    piston.set(state);
+  }
+  public boolean getPiston(){
+    return piston.get();
   }
 }

@@ -9,7 +9,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
 /**
@@ -39,18 +38,15 @@ public class DriveArc extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    SmartDashboard.putNumber("ArcStage", 1);
     pid.setTolerance(2, 10);
     frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
     frc.robot.RobotContainer.DrivetrainT.resetEncoders();
     output = 0.6 / (m_radius+wheelDistance/2) * (m_radius-wheelDistance/2);
-    SmartDashboard.putNumber("ArcStage", 2);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("ArcStage", 3);
     if(m_angle > 0){
       target = (frc.robot.RobotContainer.DrivetrainT.getLeftVelocity() / (m_radius + (wheelDistance/2))) * (m_radius - (wheelDistance/2));
       output += MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getRightVelocity(),target), -0.6, 0.6);
@@ -61,7 +57,6 @@ public class DriveArc extends CommandBase {
       output += MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getLeftVelocity(), target), -0.6, 0.6);
       frc.robot.RobotContainer.DrivetrainT.tankDrive(output, 0.6);
     }
-    SmartDashboard.putNumber("ArcStage", 4);
   }
 
   // Called once the command ends or is interrupted.
@@ -74,8 +69,6 @@ public class DriveArc extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    SmartDashboard.putNumber("Goal", m_radius * Math.PI * 2 * m_angle/360);
-    SmartDashboard.putNumber("At", frc.robot.RobotContainer.DrivetrainT.getEncoderAverage());
     return Math.abs(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage()) >= m_radius * Math.PI * 2 * Math.abs(m_angle)/360;
   }
 }
