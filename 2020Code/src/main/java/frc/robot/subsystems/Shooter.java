@@ -49,11 +49,12 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if (frc.robot.RobotContainer.m_joystick.getRawAxis(3) > 0.8 && hoodSet < 0.35){
-      hoodSet += 0.01;
+      hoodSet += 0.005;
     }
     if (frc.robot.RobotContainer.m_joystick.getRawAxis(2) > 0.8 && hoodSet > 0){
-      hoodSet -= 0.01;
+      hoodSet -= 0.005;
     }
+    SmartDashboard.putNumber("Hood value", hoodSet);
     Hood.setPosition(hoodSet);
     if(frc.robot.RobotContainer.m_joystick.getRawButton(5)){
       // rollingAverage[pointer] = ShootEncoder.getRate();

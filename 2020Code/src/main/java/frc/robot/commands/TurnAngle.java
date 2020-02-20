@@ -23,7 +23,7 @@ public class TurnAngle extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   double m_distance;
-  PIDController pid = new PIDController(0.011, 0.00, 0.00);
+  PIDController pid = new PIDController(0.02, 0.001, 0.00);
   public TurnAngle(double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.DrivetrainT);

@@ -27,6 +27,9 @@ public class Indexer extends SubsystemBase {
     if(frc.robot.RobotContainer.m_joystick.getRawButton(1)) {
       indexMotor.set(ControlMode.PercentOutput, 0.8);
     }
+    else if(frc.robot.RobotContainer.m_joystick.getRawButton(8)){
+      indexMotor.set(ControlMode.PercentOutput, -0.6);
+    }
     else {
       indexMotor.set(ControlMode.PercentOutput, 0);
     }

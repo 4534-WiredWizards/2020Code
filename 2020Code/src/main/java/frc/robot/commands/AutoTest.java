@@ -15,7 +15,7 @@ public class AutoTest extends SequentialCommandGroup {
     addCommands(
       new DriveDistance(100),
       new TurnAngle(-90),
-      new DriveArc(40, 75)
+      new DriveArc(40, 60)
     );
   }
 }
