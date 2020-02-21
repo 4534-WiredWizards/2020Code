@@ -48,7 +48,8 @@ public class TargetPort extends CommandBase {
   @Override
   public void execute() {
     // turretAngle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + frc.robot.RobotContainer.ShooterT.getAngle();
-    distance = (Math.sqrt(frc.robot.RobotContainer.ShooterLimelightT.getArea()) / Math.sqrt(0.618)) * 55.8752 * Math.sin(Math.toRadians(frc.robot.RobotContainer.ShooterLimelightT.getYSkew())); //needs testing for equation
+    //distance = (Math.sqrt(frc.robot.RobotContainer.ShooterLimelightT.getArea()) / Math.sqrt(0.618)) * 55.8752 * Math.sin(Math.toRadians(frc.robot.RobotContainer.ShooterLimelightT.getYSkew())); //needs testing for equation
+    distance = (91 - 17) * Math.tan(frc.robot.RobotContainer.ShooterLimelightT.getYSkew());
     SmartDashboard.putNumber("Distance to target", distance);
     frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
     // robotVelocity = frc.robot.RobotContainer.DrivetrainT.getVelocity();

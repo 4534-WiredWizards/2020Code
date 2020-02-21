@@ -12,10 +12,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-// import edu.wpi.first.wpilibj.GenericHID.Hand;
-// import edu.wpi.first.wpilibj.Solenoid;
-// import edu.wpi.first.wpilibj.Spark;
-// import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 
 public class Drivetrain extends SubsystemBase {
   private CANSparkMax rightMaster;
@@ -33,6 +33,8 @@ public class Drivetrain extends SubsystemBase {
   private CANEncoder leftFollowerEncoder2;
 
   private DifferentialDrive diffDrive;
+  
+  private final DifferentialDriveOdometry m_odometry;
 
   double workingSpeed = 1;
   double demoSpeed = 0.5;
@@ -47,8 +49,7 @@ public class Drivetrain extends SubsystemBase {
   double rotationScale = 0;
   //Direct driving varibles
   boolean drivingEnabled = true;
-  double encoderFactor = 268/182.1;
-  
+  double encoderFactor = 268/182.1;  
   /**
    * Creates a new ExampleSubsystem.
    */
@@ -106,12 +107,16 @@ public class Drivetrain extends SubsystemBase {
     diffDrive.setSafetyEnabled(false);
     diffDrive.setExpiration(0.1);
     diffDrive.setMaxOutput(1.0);
+
+    frc.robot.RobotContainer.NavxT.resetHeading();
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(frc.robot.RobotContainer.NavxT.getHeading()));
   }
 
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    m_odometry.update(Rotation2d.fromDegrees(frc.robot.RobotContainer.NavxT.getHeading()), getLeftEncoders(), getRightEncoders());
   }
 
   public void arcadeDrive(double speed, double rotation) {
@@ -119,27 +124,13 @@ public class Drivetrain extends SubsystemBase {
     lastSpeed = speed;
   }
 
-  public void arcadeDriveScaled(double speed, double rotation) {
-    diffDrive.arcadeDrive((speed*maxSpeed) * (1 - driveScale) + driveScale, (rotation*maxSpeed)* (1 - rotationScale) + rotationScale, true);
-    lastSpeed = speed;
-  }
-
   public void tankDrive(double leftSpeed, double rightSpeed) {
     diffDrive.tankDrive(leftSpeed, rightSpeed);
   }
 
-  public void setDemoMode(boolean newDemoMode) {
-    demoMode = newDemoMode;
-    if (demoMode == true) {
-        maxSpeed = demoSpeed;
-    } else {
-        maxSpeed = workingSpeed;
-    }
-    return;
-  }
-
-  public double setMaxSpeed() {
-    return maxSpeed;
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    leftMaster.setVoltage(leftVolts);
+    rightMaster.setVoltage(rightVolts);
   }
 
   public double getLeftEncoders() {
@@ -176,5 +167,11 @@ public class Drivetrain extends SubsystemBase {
   }
   public double getRightVelocity() {
     return rightMasterEncoder.getVelocity();
+  }
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(leftMasterEncoder.getVelocity(), rightMasterEncoder.getVelocity());
   }
 }
