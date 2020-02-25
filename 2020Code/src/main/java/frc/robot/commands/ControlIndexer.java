@@ -34,10 +34,10 @@ public class ControlIndexer extends CommandBase {
   @Override
   public void execute() {
     if(frc.robot.RobotContainer.m_joystick.getRawButton(1)) {
-      frc.robot.RobotContainer.IndexerT.setMotor(0.8);
+      frc.robot.RobotContainer.IndexerT.setMotor(-0.6);
     }
     else if(frc.robot.RobotContainer.m_joystick.getRawButton(8)){
-      frc.robot.RobotContainer.IndexerT.setMotor(-0.6);
+      frc.robot.RobotContainer.IndexerT.setMotor(-0.9);
     }
     else {
       frc.robot.RobotContainer.IndexerT.setMotor(0);
