@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Servo;
 
 public class Shooter extends SubsystemBase {
@@ -29,11 +29,7 @@ public class Shooter extends SubsystemBase {
   Encoder ShootEncoder = new Encoder(8, 9, false, EncodingType.k4X);
   CANSparkMax Turret = new CANSparkMax(17, MotorType.kBrushless);
   CANEncoder TurretEncoder = Turret.getEncoder();
-  PIDController pid = new PIDController(0.00007, 0, 0);
-  double output = 0;
   double hoodSet = 0;
-  double total = 0;
-  int count = 0;
   double[] rollingAverage = {0,0,0,0,0};
   int pointer = 0;
   public Shooter() {
@@ -44,6 +40,11 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    rollingAverage[pointer] = ShootEncoder.getRate();
+    if(pointer < 4) pointer++;
+    else pointer = 0;
+    SmartDashboard.putNumber("Shooter AVG", getFlywheelSpeed());
+    SmartDashboard.putNumber("Shooter Direct", ShootEncoder.getRate());
   }
 
   public void setShooterSpeed(double speed) {
@@ -57,5 +58,21 @@ public class Shooter extends SubsystemBase {
   }
   public void setShooterVoltage(double volt){
     Shoot1.setVoltage(volt);
+    Shoot2.setVoltage(volt);
+    SmartDashboard.putNumber("Shooter Direct", ShootEncoder.getRate());
+  }
+  public void setHood(double value){
+    Hood.set(value);
+  }
+  public double getHood(){
+    return Hood.get();
+  }
+  public double getFlywheelSpeed(){
+    double total = 0;
+    for(int i = 0; i < 5; i++){
+      total += rollingAverage[i];
+    }
+    total /= 5;
+    return total;
   }
 }

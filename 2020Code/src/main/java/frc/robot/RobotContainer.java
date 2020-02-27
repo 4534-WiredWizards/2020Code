@@ -60,7 +60,6 @@ public class RobotContainer {
     DrivetrainT.setDefaultCommand(new DriveWithJoystick());
     IntakeT.setDefaultCommand(new ControlIntake());
     ShooterT.setDefaultCommand(new TurretWithJoystick());
-    IndexerT.setDefaultCommand(new ControlIndexer());
   }
 
   /**
@@ -88,7 +87,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     //return new AutoTest();
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
@@ -105,7 +103,6 @@ public class RobotContainer {
             .setKinematics(DriveConstants.kDriveKinematics)
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint);
-
     // An example trajectory to follow.  All units in meters.
     Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
@@ -120,7 +117,7 @@ public class RobotContainer {
         // Pass config
         config
     );
-    
+
     RamseteCommand ramseteCommand = new RamseteCommand(
         exampleTrajectory,
         DrivetrainT::getPose,

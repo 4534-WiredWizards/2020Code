@@ -24,6 +24,7 @@ public class ControlIntake extends CommandBase {
   public ControlIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.IntakeT);
+    addRequirements(frc.robot.RobotContainer.IndexerT);
   }
 
   // Called when the command is initially scheduled.
@@ -45,10 +46,23 @@ public class ControlIntake extends CommandBase {
         frc.robot.RobotContainer.IntakeT.setMotor(0);
       }
     }
+    //frc.robot.RobotContainer.IntakeT.setPiston(frc.robot.RobotContainer.m_joystick.getRawButton(6));
     if(!frc.robot.RobotContainer.m_joystick.getRawButton(6)) prevButton6 = true;
     if(frc.robot.RobotContainer.m_joystick.getRawButton(6) && prevButton6){
       frc.robot.RobotContainer.IntakeT.setPiston(!frc.robot.RobotContainer.IntakeT.getPiston());
       prevButton6 = false;
+    }
+    if(frc.robot.RobotContainer.m_joystick.getRawButton(1)) {
+      frc.robot.RobotContainer.IndexerT.setMotor(-0.9);
+    }
+    else if(frc.robot.RobotContainer.m_joystick.getRawButton(8)){
+      frc.robot.RobotContainer.IndexerT.setMotor(0.6);
+    }
+    else if(frc.robot.RobotContainer.m_joystick.getRawButton(2) &&frc.robot.RobotContainer.IndexerT.ballAtEnd()){
+      frc.robot.RobotContainer.IndexerT.setMotor(-0.9);
+    }
+    else{
+      frc.robot.RobotContainer.IndexerT.setMotor(0);
     }
   }
 

@@ -20,7 +20,7 @@ public class Intake extends SubsystemBase {
   private Solenoid piston;
   boolean prevButton6 = false;
   public Intake() {
-    piston = new Solenoid(0, 4);
+    piston = new Solenoid(0, 1);
     addChild("piston", piston);
     motor = new CANSparkMax(16, MotorType.kBrushless);
   }

@@ -49,16 +49,20 @@ public class TargetPort extends CommandBase {
   public void execute() {
     // turretAngle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + frc.robot.RobotContainer.ShooterT.getAngle();
     //distance = (Math.sqrt(frc.robot.RobotContainer.ShooterLimelightT.getArea()) / Math.sqrt(0.618)) * 55.8752 * Math.sin(Math.toRadians(frc.robot.RobotContainer.ShooterLimelightT.getYSkew())); //needs testing for equation
-    distance = (91 - 17) * Math.tan(frc.robot.RobotContainer.ShooterLimelightT.getYSkew());
+    distance = (95 - 17) / Math.tan((frc.robot.RobotContainer.ShooterLimelightT.getYSkew() + 22) * Math.PI/ 180);
     SmartDashboard.putNumber("Distance to target", distance);
-    frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
+    //frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
     // robotVelocity = frc.robot.RobotContainer.DrivetrainT.getVelocity();
     // ballVelocity = distance; //needs testing for equation
     // predictor = 0;//Math.asin((robotVelocity * Math.sin(Math.toRadians(turretAngle))) / ballVelocity);
     // angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + predictor;
-    if(frc.robot.RobotContainer.ShooterLimelightT.limelightHasTarget() && frc.robot.RobotContainer.m_joystick.getRawButton(4)) {
-      angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew();
-      if (Math.abs(angle) > 0.05) frc.robot.RobotContainer.ShooterT.setTurretSpeed(pid.calculate(angle, 0));
+    if(frc.robot.RobotContainer.m_joystick.getRawButton(5)) frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
+    else frc.robot.RobotContainer.ShooterT.setShooterVoltage(0);
+    if(frc.robot.RobotContainer.ShooterLimelightT.limelightHasTarget()) {
+      frc.robot.RobotContainer.ShooterT.setHood(-0.137+0.00569*distance-0.0000113*(Math.pow(distance, 2)));
+      SmartDashboard.putNumber("Hood Auto", -0.137+0.00569*distance-0.0000113*(Math.pow(distance, 2)));
+      angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + 1.2;
+      frc.robot.RobotContainer.ShooterT.setTurretSpeed(pid.calculate(angle, 0));
     }
   }
 
