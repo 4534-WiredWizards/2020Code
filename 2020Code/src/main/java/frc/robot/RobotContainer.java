@@ -77,7 +77,7 @@ public class RobotContainer {
     //a.whenPressed(new GoToColor());
     //b.whenPressed(new SpinTimes());
     // x.whenPressed(new AutoTest());
-    leftBumper.toggleWhenPressed(new TargetPort());
+    leftBumper.toggleWhenPressed(new TargetPort(false));
   }
 
 

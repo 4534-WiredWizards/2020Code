@@ -7,15 +7,12 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpiutil.math.MathUtil;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class TurretWithJoystick extends CommandBase {
-  double hoodOut;
+public class AutoIntake extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
   /**
@@ -23,35 +20,42 @@ public class TurretWithJoystick extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public TurretWithJoystick() {
+  boolean prevButton6;
+  double m_intakeSpeed;
+  double m_indexerSpeed;
+  boolean m_piston;
+  public AutoIntake(double intakeSpeed, double indexerSpeed, boolean piston) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(frc.robot.RobotContainer.ShooterT);
+    addRequirements(frc.robot.RobotContainer.IntakeT);
+    addRequirements(frc.robot.RobotContainer.IndexerT);
+    m_intakeSpeed = intakeSpeed;
+    m_indexerSpeed = indexerSpeed;
+    m_piston = piston;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      frc.robot.RobotContainer.ShooterT.setTurretSpeed(-frc.robot.RobotContainer.m_joystick.getRawAxis(0));
-      hoodOut = frc.robot.RobotContainer.ShooterT.getHood();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    frc.robot.RobotContainer.ShooterT.setTurretSpeed(-frc.robot.RobotContainer.m_joystick.getRawAxis(0));
-    if(frc.robot.RobotContainer.m_joystick.getRawButton(5)) frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
-    else if(frc.robot.RobotContainer.m_joystick.getRawButton(7)) frc.robot.RobotContainer.ShooterT.setShooterVoltage(-9);
-    else frc.robot.RobotContainer.ShooterT.setShooterVoltage(0);
-    frc.robot.RobotContainer.ShooterT.setHood(hoodOut);
-    if(Math.abs(frc.robot.RobotContainer.m_joystick.getRawAxis(5)) > 0.1) hoodOut -= frc.robot.RobotContainer.m_joystick.getRawAxis(5) * 0.003;
-    hoodOut = MathUtil.clamp(hoodOut, 0.0, 0.7);
-    SmartDashboard.putNumber("Hood pos", frc.robot.RobotContainer.ShooterT.getHood());
-    SmartDashboard.putNumber("Hood out", hoodOut);
+    frc.robot.RobotContainer.IntakeT.setMotor(m_intakeSpeed);
+    frc.robot.RobotContainer.IntakeT.setPiston(m_piston);
+    if(m_intakeSpeed < 0 && frc.robot.RobotContainer.IndexerT.ballAtEnd()){
+      frc.robot.RobotContainer.IndexerT.setMotor(-0.9);
+    }
+    else{
+      frc.robot.RobotContainer.IndexerT.setMotor(m_indexerSpeed);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    frc.robot.RobotContainer.IndexerT.setMotor(0);
+    frc.robot.RobotContainer.IntakeT.setMotor(0);
   }
 
   // Returns true when the command should end.

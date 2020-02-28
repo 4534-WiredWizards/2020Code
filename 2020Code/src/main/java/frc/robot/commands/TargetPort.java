@@ -29,10 +29,12 @@ public class TargetPort extends CommandBase {
   double ballVelocity;
   double turretAngle;
   long time;
+  boolean m_inAuto;
   PIDController pid = new PIDController(0.1, 0, 0.0);
-  public TargetPort() {
+  public TargetPort(boolean inAuto) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.ShooterT);
+    m_inAuto = inAuto;
   }
 
   // Called when the command is initially scheduled.
@@ -58,8 +60,9 @@ public class TargetPort extends CommandBase {
     // angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + predictor;
     if(frc.robot.RobotContainer.m_joystick.getRawButton(5)) frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
     else frc.robot.RobotContainer.ShooterT.setShooterVoltage(0);
+    if(m_inAuto)frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
     if(frc.robot.RobotContainer.ShooterLimelightT.limelightHasTarget()) {
-      frc.robot.RobotContainer.ShooterT.setHood(-0.137+0.00569*distance-0.0000113*(Math.pow(distance, 2)));
+      frc.robot.RobotContainer.ShooterT.setHood(-0.137+0.00569*distance-0.0000115*(Math.pow(distance, 2)));
       SmartDashboard.putNumber("Hood Auto", -0.137+0.00569*distance-0.0000113*(Math.pow(distance, 2)));
       angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + 1.2;
       frc.robot.RobotContainer.ShooterT.setTurretSpeed(pid.calculate(angle, 0));
