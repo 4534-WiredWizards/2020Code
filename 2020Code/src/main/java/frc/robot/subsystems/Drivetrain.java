@@ -55,6 +55,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public Drivetrain() {
     rightMaster = new CANSparkMax(10, MotorType.kBrushless);
+    rightMaster.restoreFactoryDefaults();
     rightMaster.setInverted(true);
     rightMasterEncoder = rightMaster.getEncoder();
     rightMasterEncoder.setPositionConversionFactor(encoderFactor);
@@ -62,6 +63,7 @@ public class Drivetrain extends SubsystemBase {
     rightMaster.setOpenLoopRampRate(0.1);
 
     rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
+    rightFollower1.restoreFactoryDefaults();
     rightFollower1.setInverted(true);
     rightFollowerEncoder1 = rightFollower1.getEncoder();
     rightFollowerEncoder1.setPositionConversionFactor(encoderFactor);
@@ -69,6 +71,7 @@ public class Drivetrain extends SubsystemBase {
     rightFollower1.setOpenLoopRampRate(0.1);
 
     rightFollower2 = new CANSparkMax(12, MotorType.kBrushless);
+    rightFollower2.restoreFactoryDefaults();
     rightFollower2.setInverted(true);
     rightFollowerEncoder2 = rightFollower2.getEncoder();
     rightFollowerEncoder2.setPositionConversionFactor(encoderFactor);
@@ -76,6 +79,7 @@ public class Drivetrain extends SubsystemBase {
     rightFollower2.setOpenLoopRampRate(0.1);
 
     leftMaster = new CANSparkMax(15, MotorType.kBrushless);
+    leftMaster.restoreFactoryDefaults();
     leftMaster.setInverted(true);
     leftMasterEncoder = leftMaster.getEncoder();
     leftMasterEncoder.setPositionConversionFactor(encoderFactor);
@@ -83,6 +87,7 @@ public class Drivetrain extends SubsystemBase {
     leftMaster.setOpenLoopRampRate(0.1);
     
     leftFollower1 = new CANSparkMax(14, MotorType.kBrushless);
+    leftFollower1.restoreFactoryDefaults();
     leftFollower1.setInverted(true);
     leftFollowerEncoder1 = leftFollower1.getEncoder();
     leftFollowerEncoder1.setPositionConversionFactor(encoderFactor);
@@ -90,6 +95,7 @@ public class Drivetrain extends SubsystemBase {
     leftFollower1.setOpenLoopRampRate(0.1);
 
     leftFollower2 = new CANSparkMax(13, MotorType.kBrushless);
+    leftFollower2.restoreFactoryDefaults();
     leftFollower2.setInverted(true);
     leftFollowerEncoder2 = leftFollower2.getEncoder();
     leftFollowerEncoder2.setPositionConversionFactor(encoderFactor);

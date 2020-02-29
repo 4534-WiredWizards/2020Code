@@ -36,15 +36,12 @@ public class Shooter extends SubsystemBase {
     Shoot2.follow(Shoot1);
     Shoot2.setInverted(false);
     Hood.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
+    TurretEncoder.setPosition(0);
   }
 
   @Override
   public void periodic() {
-    rollingAverage[pointer] = ShootEncoder.getRate();
-    if(pointer < 4) pointer++;
-    else pointer = 0;
-    SmartDashboard.putNumber("Shooter AVG", getFlywheelSpeed());
-    SmartDashboard.putNumber("Shooter Direct", ShootEncoder.getRate());
+    SmartDashboard.putNumber("Shooter angle", getAngle());
   }
 
   public void setShooterSpeed(double speed) {
@@ -54,7 +51,7 @@ public class Shooter extends SubsystemBase {
     Turret.set(MathUtil.clamp(-speed * 0.1, -0.1, 0.1));
   }
   public double getAngle() {
-    return TurretEncoder.getPosition();
+    return TurretEncoder.getPosition() * 90 / 8.0238;
   }
   public void setShooterVoltage(double volt){
     Shoot1.setVoltage(volt);
@@ -62,7 +59,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter Direct", ShootEncoder.getRate());
   }
   public void setHood(double value){
-    Hood.set(value);
+    Hood.set(MathUtil.clamp(value, 0, 0.61));
   }
   public double getHood(){
     return Hood.get();
@@ -74,5 +71,8 @@ public class Shooter extends SubsystemBase {
     }
     total /= 5;
     return total;
+  }
+  public void zeroTurretAngle(){
+    TurretEncoder.setPosition(0);
   }
 }

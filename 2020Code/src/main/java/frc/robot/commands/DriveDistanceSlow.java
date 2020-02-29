@@ -15,7 +15,7 @@ import edu.wpi.first.wpiutil.math.MathUtil;
 /**
  * An example command that uses an example subsystem.
  */
-public class DriveDistance extends CommandBase {
+public class DriveDistanceSlow extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
   /**
@@ -25,7 +25,7 @@ public class DriveDistance extends CommandBase {
    */
   double m_distance = 0;
   PIDController pid = new PIDController(0.05, 0.005, 0);
-  public DriveDistance(double distance) {
+  public DriveDistanceSlow(double distance) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.DrivetrainT);
     m_distance = distance;
@@ -43,7 +43,7 @@ public class DriveDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage(), m_distance), -0.6, 0.6), 0/*frc.robot.RobotContainer.NavxT.getHeading() * 0.1*/);
+    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage(), m_distance), -0.4, 0.4), 0/*frc.robot.RobotContainer.NavxT.getHeading() * 0.1*/);
     SmartDashboard.putNumber("Off", frc.robot.RobotContainer.DrivetrainT.getEncoderAverage());
   }
 

@@ -9,13 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpiutil.math.MathUtil;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class DriveDistance extends CommandBase {
+public class TurretToAngle extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
   /**
@@ -23,35 +21,29 @@ public class DriveDistance extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  double m_distance = 0;
-  PIDController pid = new PIDController(0.05, 0.005, 0);
-  public DriveDistance(double distance) {
+  double m_angle;
+  PIDController pid = new PIDController(0.06, 0.09, 0.0);
+  public TurretToAngle(double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(frc.robot.RobotContainer.DrivetrainT);
-    m_distance = distance;
+    addRequirements(frc.robot.RobotContainer.ShooterT);
+    m_angle = angle;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     pid.setTolerance(2, 10);
-    frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
-    frc.robot.RobotContainer.DrivetrainT.resetEncoders();
-    frc.robot.RobotContainer.NavxT.resetHeading();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage(), m_distance), -0.6, 0.6), 0/*frc.robot.RobotContainer.NavxT.getHeading() * 0.1*/);
-    SmartDashboard.putNumber("Off", frc.robot.RobotContainer.DrivetrainT.getEncoderAverage());
+    frc.robot.RobotContainer.ShooterT.setTurretSpeed(-pid.calculate(frc.robot.RobotContainer.ShooterT.getAngle(), m_angle));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(0,0);
-    frc.robot.RobotContainer.DrivetrainT.allowDrive(true);
   }
 
   // Returns true when the command should end.
