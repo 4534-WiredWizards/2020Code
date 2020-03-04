@@ -61,7 +61,7 @@ public class Drivetrain extends SubsystemBase {
     rightMasterEncoder.setPositionConversionFactor(encoderFactor);
     rightMasterEncoder.setVelocityConversionFactor(encoderFactor);
     rightMaster.setOpenLoopRampRate(0.1);
-
+  
     rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
     rightFollower1.restoreFactoryDefaults();
     rightFollower1.setInverted(true);

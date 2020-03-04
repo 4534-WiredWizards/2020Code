@@ -24,7 +24,7 @@ public class DriveDistanceSlow extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   double m_distance = 0;
-  PIDController pid = new PIDController(0.05, 0.005, 0);
+  PIDController pid = new PIDController(0.04, 0.003, 0);
   public DriveDistanceSlow(double distance) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.DrivetrainT);

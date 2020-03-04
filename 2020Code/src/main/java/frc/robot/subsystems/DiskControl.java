@@ -25,7 +25,7 @@ public class DiskControl extends SubsystemBase {
     private Solenoid piston;
 
   public DiskControl() {
-    piston = new Solenoid(30, 3);
+    piston = new Solenoid(0, 3);
     addChild("piston", piston);
   }
 

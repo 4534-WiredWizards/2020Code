@@ -22,7 +22,7 @@ public class TurretToAngle extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   double m_angle;
-  PIDController pid = new PIDController(0.06, 0.09, 0.0);
+  PIDController pid = new PIDController(0.07, 0.05, 0.0);
   public TurretToAngle(double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.ShooterT);
@@ -32,7 +32,7 @@ public class TurretToAngle extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pid.setTolerance(2, 10);
+    pid.setTolerance(5, 10);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
