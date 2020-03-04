@@ -51,6 +51,7 @@ public class Shooter extends SubsystemBase {
     Turret.set(MathUtil.clamp(-speed * 0.1, -0.1, 0.1));
   }
   public double getAngle() {
+    SmartDashboard.putNumber("Shooter angle", TurretEncoder.getPosition() * 90 / 8.0238);
     return TurretEncoder.getPosition() * 90 / 8.0238;
   }
   public void setShooterVoltage(double volt){

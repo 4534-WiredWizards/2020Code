@@ -22,7 +22,7 @@ public class TurretToAngle extends CommandBase {
    * @param subsystem The subsystem used by this command.
    */
   double m_angle;
-  PIDController pid = new PIDController(0.07, 0.05, 0.0);
+  PIDController pid = new PIDController(0.01, 0.00, 0.0);
   public TurretToAngle(double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.ShooterT);

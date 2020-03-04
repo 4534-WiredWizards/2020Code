@@ -42,8 +42,12 @@ public class AutoControlIntake extends CommandBase {
   public void execute() {
     frc.robot.RobotContainer.IntakeT.setPiston(m_intakeState);
     if(m_intakeSpeed < 0 && frc.robot.RobotContainer.IndexerT.ballAtEnd()){
-      frc.robot.RobotContainer.IndexerT.setMotor(-0.9);
-    } else{
+      frc.robot.RobotContainer.IndexerT.setMotor(0);
+    } 
+    else if(m_intakeSpeed < 0 && !frc.robot.RobotContainer.IndexerT.ballAtEnd()){
+      frc.robot.RobotContainer.IndexerT.setMotor(0);
+    }
+    else{
       frc.robot.RobotContainer.IndexerT.setMotor(m_indexerSpeed);
     }
     frc.robot.RobotContainer.IntakeT.setMotor(m_intakeSpeed);

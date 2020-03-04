@@ -52,7 +52,7 @@ public class TargetPortAuto extends CommandBase {
     distance = (95 - 17) / Math.tan((frc.robot.RobotContainer.ShooterLimelightT.getYSkew() + 22) * Math.PI/ 180);
     if(m_rev) frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
     else frc.robot.RobotContainer.ShooterT.setShooterVoltage(0);
-    frc.robot.RobotContainer.ShooterT.setHood(-0.137+0.00569*distance-0.0000110*(Math.pow(distance, 2)));
+    frc.robot.RobotContainer.ShooterT.setHood(-0.137+0.00489*distance-0.0000113*(Math.pow(distance, 2)));
     if(frc.robot.RobotContainer.ShooterLimelightT.limelightHasTarget() && m_aim) {
       angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + 1.2;
       frc.robot.RobotContainer.ShooterT.setTurretSpeed(pid.calculate(angle, 0));

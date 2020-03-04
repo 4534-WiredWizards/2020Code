@@ -53,10 +53,10 @@ public class ControlIntake extends CommandBase {
       prevButton6 = false;
     }
     if(frc.robot.RobotContainer.m_joystick.getRawButton(1)) {
-      frc.robot.RobotContainer.IndexerT.setMotor(-0.7);
+      frc.robot.RobotContainer.IndexerT.setMotor(-0.8);
     }
     else if(frc.robot.RobotContainer.m_joystick.getRawButton(8)){
-      frc.robot.RobotContainer.IndexerT.setMotor(0.6);
+      frc.robot.RobotContainer.IndexerT.setMotor(0.8);
     }
     else if(frc.robot.RobotContainer.m_joystick.getRawButton(2) &&frc.robot.RobotContainer.IndexerT.ballAtEnd()){
       frc.robot.RobotContainer.IndexerT.setMotor(-0.9);
