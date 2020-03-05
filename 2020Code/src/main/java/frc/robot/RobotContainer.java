@@ -62,13 +62,15 @@ public class RobotContainer {
     //final JoystickButton b = new JoystickButton(m_joystick, 2);
     // final JoystickButton x = new JoystickButton(m_joystick, 3);
     final JoystickButton leftBumper = new JoystickButton(m_joystick, 4);
-    final JoystickButton climbButton = new JoystickButton(m_driverController, 8);
+    final JoystickButton climbButtonUp = new JoystickButton(m_driverController, 8);
+    final JoystickButton climbButtonDown = new JoystickButton(m_driverController, 7);
 
     //a.whenPressed(new GoToColor());
     //b.whenPressed(new SpinTimes());
     //x.whenPressed(new AutoTest());
     leftBumper.toggleWhenPressed(new TargetPort());
-    climbButton.whenPressed(new SetClimb(true));
+    climbButtonUp.whenPressed(new SetClimb(true));
+    climbButtonDown.whenPressed(new SetClimb(false));
   }
 
 
@@ -78,6 +80,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new SixBallSimple();
+    return new SixBallSimple().withTimeout(20);
   }
 }

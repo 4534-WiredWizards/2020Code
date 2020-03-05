@@ -25,8 +25,7 @@ public class Climb extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if(frc.robot.RobotContainer.m_driverController.getAButton()) Winch.set(-1);
-    else if(frc.robot.RobotContainer.m_driverController.getBButton()) Winch.set(1);
+    if(frc.robot.RobotContainer.m_driverController.getBButton()) Winch.set(1);
     else Winch.set(0);
   }
 

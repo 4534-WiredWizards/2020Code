@@ -59,8 +59,7 @@ public class TargetPort extends CommandBase {
     if(frc.robot.RobotContainer.m_joystick.getRawButton(5)) frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
     else frc.robot.RobotContainer.ShooterT.setShooterVoltage(0);
     if(frc.robot.RobotContainer.ShooterLimelightT.limelightHasTarget()) {
-      if(!frc.robot.RobotContainer.m_joystick.getRawButton(1)) frc.robot.RobotContainer.ShooterT.setHood(-0.137+0.00569*distance-0.0000113*(Math.pow(distance, 2)));
-      SmartDashboard.putNumber("Hood Auto", -0.137+0.00489*distance-0.0000118*(Math.pow(distance, 2)));
+      if(!frc.robot.RobotContainer.m_joystick.getRawButton(1)) frc.robot.RobotContainer.ShooterT.setHood(-0.137+0.00529*distance-0.0000113*(Math.pow(distance, 2)));
       angle = frc.robot.RobotContainer.ShooterLimelightT.getXSkew() + 1.2;
       frc.robot.RobotContainer.ShooterT.setTurretSpeed(pid.calculate(angle, 0));
     }
