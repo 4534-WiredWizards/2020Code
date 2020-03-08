@@ -71,6 +71,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     frc.robot.RobotContainer.ShooterT.zeroTurretAngle();
+    frc.robot.RobotContainer.PneumaticsT.setCompressor(true);
   }
 
   @Override
@@ -84,6 +85,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     frc.robot.RobotContainer.ShooterT.zeroTurretAngle();
     frc.robot.RobotContainer.ClimbT.setClimb(false);
+    frc.robot.RobotContainer.PneumaticsT.setCompressor(false);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)

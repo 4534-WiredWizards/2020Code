@@ -34,7 +34,7 @@ public class DriveDistanceSlow extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pid.setTolerance(2, 10);
+    pid.setTolerance(5, 10);
     frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
     frc.robot.RobotContainer.DrivetrainT.resetEncoders();
     frc.robot.RobotContainer.NavxT.resetHeading();

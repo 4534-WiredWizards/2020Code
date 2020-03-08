@@ -26,10 +26,10 @@ public class SixBallSimple extends SequentialCommandGroup {
       ),
       new TargetPortAuto(false, false).withTimeout(0.1),
       new AutoControlIntake(-0.6, 0, true).withTimeout(0.1),
-      new DriveDistanceSlow(180).withTimeout(7),
+      new DriveDistanceSlow(110).withTimeout(5),
       new AutoControlIntake(0, 0, true).withTimeout(0.1),
       new ParallelCommandGroup(
-        new DriveDistance(-180).withTimeout(3),
+        new DriveDistance(-110).withTimeout(3),
         new TargetPortAuto(false, true).withTimeout(3)
       ),
       new TargetPortAuto(true, true).withTimeout(0.5),

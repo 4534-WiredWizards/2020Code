@@ -40,6 +40,7 @@ public class TurretWithJoystick extends CommandBase {
   public void execute() {
     frc.robot.RobotContainer.ShooterT.setTurretSpeed(-frc.robot.RobotContainer.m_joystick.getRawAxis(0));
     if(frc.robot.RobotContainer.m_joystick.getRawButton(5)) frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
+    else if(frc.robot.RobotContainer.m_joystick.getRawButton(7)) frc.robot.RobotContainer.ShooterT.setShooterVoltage(-9);
     else frc.robot.RobotContainer.ShooterT.setShooterVoltage(0);
     frc.robot.RobotContainer.ShooterT.setHood(hoodOut);
     if(Math.abs(frc.robot.RobotContainer.m_joystick.getRawAxis(5)) > 0.1) hoodOut -= frc.robot.RobotContainer.m_joystick.getRawAxis(5) * 0.003;
