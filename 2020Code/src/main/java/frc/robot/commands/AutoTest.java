@@ -11,10 +11,15 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class AutoTest extends SequentialCommandGroup {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
+
+  public static final double DriveDist = 100;
+  public static final double TurnAngle = -90;
+  
+
   public AutoTest() {
     addCommands(
-      new DriveDistance(100),
-      new TurnAngle(-90),
+      new DriveDistance(DriveDist),
+      new TurnAngle(TurnAngle),
       new DriveArc(40, 60)
     );
   }
