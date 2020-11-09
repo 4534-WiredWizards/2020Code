@@ -7,15 +7,15 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class DriveDistance extends CommandBase {
+public class TurretWithJoystick extends CommandBase {
+  double hoodOut;
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
   /**
@@ -23,40 +23,40 @@ public class DriveDistance extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  double m_distance = 0;
-  PIDController pid = new PIDController(0.05, 0.005, 0);
-  public DriveDistance(double distance) {
+  public TurretWithJoystick() {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(frc.robot.RobotContainer.DrivetrainT);
-    m_distance = distance;
+    addRequirements(frc.robot.RobotContainer.ShooterT);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pid.setTolerance(2, 10);
-    frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
-    frc.robot.RobotContainer.DrivetrainT.resetEncoders();
-    frc.robot.RobotContainer.NavxT.resetHeading();
+      frc.robot.RobotContainer.ShooterT.setTurretSpeed(-frc.robot.RobotContainer.m_joystick.getRawAxis(0));
+      hoodOut = frc.robot.RobotContainer.ShooterT.getHood();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage(), m_distance), -0.6, 0.6), 0/*frc.robot.RobotContainer.NavxT.getHeading() * 0.1*/);
-    SmartDashboard.putNumber("Off", frc.robot.RobotContainer.DrivetrainT.getEncoderAverage());
+    frc.robot.RobotContainer.ShooterT.setTurretSpeed(-frc.robot.RobotContainer.m_joystick.getRawAxis(0));
+    if(frc.robot.RobotContainer.m_joystick.getRawButton(5)) frc.robot.RobotContainer.ShooterT.setShooterVoltage(9);
+    else if(frc.robot.RobotContainer.m_joystick.getRawButton(7)) frc.robot.RobotContainer.ShooterT.setShooterVoltage(-9);
+    else frc.robot.RobotContainer.ShooterT.setShooterVoltage(0);
+    frc.robot.RobotContainer.ShooterT.setHood(hoodOut);
+    if(Math.abs(frc.robot.RobotContainer.m_joystick.getRawAxis(5)) > 0.1) hoodOut -= frc.robot.RobotContainer.m_joystick.getRawAxis(5) * 0.003;
+    hoodOut = MathUtil.clamp(hoodOut, 0.0, 0.7);
+    SmartDashboard.putNumber("Hood pos", frc.robot.RobotContainer.ShooterT.getHood());
+    SmartDashboard.putNumber("Hood out", hoodOut);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(0,0);
-    frc.robot.RobotContainer.DrivetrainT.allowDrive(true);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return pid.atSetpoint();
+    return false;
   }
 }

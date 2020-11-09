@@ -25,16 +25,15 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  public static DiskControl DiskControlT = new DiskControl();
+  public static Navx NavxT = new Navx();
   public static Drivetrain DrivetrainT = new Drivetrain();
   public static Pneumatics PneumaticsT = new Pneumatics();
   public static ShooterLimelight ShooterLimelightT = new ShooterLimelight();
-  public static DiskControl DiskControlT = new DiskControl();
-  public static Navx NavxT = new Navx();
   public static Intake IntakeT = new Intake();
   public static Indexer IndexerT = new Indexer();
   public static Climb ClimbT = new Climb();
   public static Shooter ShooterT = new Shooter();
-  public static BallLimelight BallLimelightT = new BallLimelight();
   //public static Lights LightsT = new Lights();
 
   public static XboxController m_driverController = new XboxController(0);
@@ -48,6 +47,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     DrivetrainT.setDefaultCommand(new DriveWithJoystick());
+    IntakeT.setDefaultCommand(new ControlIntake());
+    ShooterT.setDefaultCommand(new TurretWithJoystick());
   }
 
   /**
@@ -60,12 +61,16 @@ public class RobotContainer {
     //final JoystickButton a = new JoystickButton(m_joystick, 1);
     //final JoystickButton b = new JoystickButton(m_joystick, 2);
     // final JoystickButton x = new JoystickButton(m_joystick, 3);
-    final JoystickButton y = new JoystickButton(m_joystick, 4);
+    final JoystickButton leftBumper = new JoystickButton(m_joystick, 4);
+    final JoystickButton climbButtonUp = new JoystickButton(m_driverController, 8);
+    final JoystickButton climbButtonDown = new JoystickButton(m_driverController, 7);
 
     //a.whenPressed(new GoToColor());
     //b.whenPressed(new SpinTimes());
-    // x.whenPressed(new AutoTest());
-    y.toggleWhenPressed(new TargetPort());
+    //x.whenPressed(new AutoTest());
+    leftBumper.toggleWhenPressed(new TargetPort());
+    climbButtonUp.whenPressed(new SetClimb(true));
+    climbButtonDown.whenPressed(new SetClimb(false));
   }
 
 
@@ -75,7 +80,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return new AutoTest();
+    return new ThreeBallFar().withTimeout(20);
   }
 }

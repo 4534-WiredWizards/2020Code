@@ -11,13 +11,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.cameraserver.CameraServer;;
 
 public class ShooterLimelight extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
   public ShooterLimelight() {
-
+    CameraServer.getInstance().startAutomaticCapture();
   }
 
   @Override

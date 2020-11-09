@@ -12,11 +12,10 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import edu.wpi.first.wpilibj.GenericHID.Hand;
-// import edu.wpi.first.wpilibj.Solenoid;
-// import edu.wpi.first.wpilibj.Spark;
-// import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 
 public class Drivetrain extends SubsystemBase {
   private CANSparkMax rightMaster;
@@ -34,6 +33,8 @@ public class Drivetrain extends SubsystemBase {
   private CANEncoder leftFollowerEncoder2;
 
   private DifferentialDrive diffDrive;
+  
+  private final DifferentialDriveOdometry m_odometry;
 
   double workingSpeed = 1;
   double demoSpeed = 0.5;
@@ -48,53 +49,58 @@ public class Drivetrain extends SubsystemBase {
   double rotationScale = 0;
   //Direct driving varibles
   boolean drivingEnabled = true;
-  double encoderFactor = 268/182.1;
-  
+  double encoderFactor = 268/182.1;  
   /**
    * Creates a new ExampleSubsystem.
    */
   public Drivetrain() {
     rightMaster = new CANSparkMax(10, MotorType.kBrushless);
+    rightMaster.restoreFactoryDefaults();
     rightMaster.setInverted(true);
     rightMasterEncoder = rightMaster.getEncoder();
     rightMasterEncoder.setPositionConversionFactor(encoderFactor);
     rightMasterEncoder.setVelocityConversionFactor(encoderFactor);
-    rightMaster.setOpenLoopRampRate(0.1);
-
+    rightMaster.setOpenLoopRampRate(0.25);
+  
     rightFollower1 = new CANSparkMax(11, MotorType.kBrushless);
+    rightFollower1.restoreFactoryDefaults();
     rightFollower1.setInverted(true);
     rightFollowerEncoder1 = rightFollower1.getEncoder();
     rightFollowerEncoder1.setPositionConversionFactor(encoderFactor);
     rightFollowerEncoder1.setVelocityConversionFactor(encoderFactor);
-    rightFollower1.setOpenLoopRampRate(0.1);
+    rightFollower1.setOpenLoopRampRate(0.25);
 
     rightFollower2 = new CANSparkMax(12, MotorType.kBrushless);
+    rightFollower2.restoreFactoryDefaults();
     rightFollower2.setInverted(true);
     rightFollowerEncoder2 = rightFollower2.getEncoder();
     rightFollowerEncoder2.setPositionConversionFactor(encoderFactor);
     rightFollowerEncoder2.setVelocityConversionFactor(encoderFactor);
-    rightFollower2.setOpenLoopRampRate(0.1);
+    rightFollower2.setOpenLoopRampRate(0.25);
 
     leftMaster = new CANSparkMax(15, MotorType.kBrushless);
+    leftMaster.restoreFactoryDefaults();
     leftMaster.setInverted(true);
     leftMasterEncoder = leftMaster.getEncoder();
     leftMasterEncoder.setPositionConversionFactor(encoderFactor);
     leftMasterEncoder.setVelocityConversionFactor(encoderFactor);
-    leftMaster.setOpenLoopRampRate(0.1);
+    leftMaster.setOpenLoopRampRate(0.25);
     
     leftFollower1 = new CANSparkMax(14, MotorType.kBrushless);
+    leftFollower1.restoreFactoryDefaults();
     leftFollower1.setInverted(true);
     leftFollowerEncoder1 = leftFollower1.getEncoder();
     leftFollowerEncoder1.setPositionConversionFactor(encoderFactor);
     leftFollowerEncoder1.setVelocityConversionFactor(encoderFactor);
-    leftFollower1.setOpenLoopRampRate(0.1);
+    leftFollower1.setOpenLoopRampRate(0.25);
 
     leftFollower2 = new CANSparkMax(13, MotorType.kBrushless);
+    leftFollower2.restoreFactoryDefaults();
     leftFollower2.setInverted(true);
     leftFollowerEncoder2 = leftFollower2.getEncoder();
     leftFollowerEncoder2.setPositionConversionFactor(encoderFactor);
     leftFollowerEncoder2.setVelocityConversionFactor(encoderFactor);
-    leftFollower2.setOpenLoopRampRate(0.1);
+    leftFollower2.setOpenLoopRampRate(0.25);
     
 
     leftFollower1.follow(leftMaster);
@@ -107,26 +113,20 @@ public class Drivetrain extends SubsystemBase {
     diffDrive.setSafetyEnabled(false);
     diffDrive.setExpiration(0.1);
     diffDrive.setMaxOutput(1.0);
+
+    frc.robot.RobotContainer.NavxT.resetHeading();
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(frc.robot.RobotContainer.NavxT.getHeading()));
   }
 
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Encoders", getLeftEncoders());
-    SmartDashboard.putNumber("Right Encoders", getRightEncoders());
-    SmartDashboard.putNumber("Avg Encoders", getEncoderAverage());
+    m_odometry.update(Rotation2d.fromDegrees(frc.robot.RobotContainer.NavxT.getHeading()), getLeftEncoders(), getRightEncoders());
   }
 
   public void arcadeDrive(double speed, double rotation) {
-    SmartDashboard.putNumber("Drive Speed", speed);
-    SmartDashboard.putNumber("Rot Speed", rotation);
     diffDrive.arcadeDrive(speed*maxSpeed, rotation*maxSpeed, true);
-    lastSpeed = speed;
-  }
-
-  public void arcadeDriveScaled(double speed, double rotation) {
-    diffDrive.arcadeDrive((speed*maxSpeed) * (1 - driveScale) + driveScale, (rotation*maxSpeed)* (1 - rotationScale) + rotationScale, true);
     lastSpeed = speed;
   }
 
@@ -134,18 +134,9 @@ public class Drivetrain extends SubsystemBase {
     diffDrive.tankDrive(leftSpeed, rightSpeed);
   }
 
-  public void setDemoMode(boolean newDemoMode) {
-    demoMode = newDemoMode;
-    if (demoMode == true) {
-        maxSpeed = demoSpeed;
-    } else {
-        maxSpeed = workingSpeed;
-    }
-    return;
-  }
-
-  public double setMaxSpeed() {
-    return maxSpeed;
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    leftMaster.setVoltage(leftVolts);
+    rightMaster.setVoltage(rightVolts);
   }
 
   public double getLeftEncoders() {
@@ -182,5 +173,11 @@ public class Drivetrain extends SubsystemBase {
   }
   public double getRightVelocity() {
     return rightMasterEncoder.getVelocity();
+  }
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(leftMasterEncoder.getVelocity(), rightMasterEncoder.getVelocity());
   }
 }

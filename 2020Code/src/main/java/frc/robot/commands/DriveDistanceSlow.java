@@ -9,12 +9,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpiutil.math.MathUtil;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class DriveArc extends CommandBase {
+public class DriveDistanceSlow extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 
   /**
@@ -22,41 +23,28 @@ public class DriveArc extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  double m_radius = 0;
-  double m_angle = 0;
-  double wheelDistance = 21.0;
-  double output;
-  double target;
-  PIDController pid = new PIDController(0.0000003, 0, 0);
-  public DriveArc(double radius, double angle) {
+  double m_distance = 0;
+  PIDController pid = new PIDController(0.04, 0.003, 0);
+  public DriveDistanceSlow(double distance) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.DrivetrainT);
-    m_radius = radius;
-    m_angle = angle;
+    m_distance = distance;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pid.setTolerance(2, 10);
+    pid.setTolerance(5, 10);
     frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
     frc.robot.RobotContainer.DrivetrainT.resetEncoders();
-    output = 0.6 / (m_radius+wheelDistance/2) * (m_radius-wheelDistance/2);
+    frc.robot.RobotContainer.NavxT.resetHeading();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_angle > 0){
-      target = (frc.robot.RobotContainer.DrivetrainT.getLeftVelocity() / (m_radius + (wheelDistance/2))) * (m_radius - (wheelDistance/2));
-      output += MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getRightVelocity(),target), -0.6, 0.6);
-      frc.robot.RobotContainer.DrivetrainT.tankDrive(0.6, output);
-    }
-    else{
-      target = (frc.robot.RobotContainer.DrivetrainT.getRightVelocity() / (m_radius + (wheelDistance/2))) * (m_radius - (wheelDistance/2));
-      output += MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getLeftVelocity(), target), -0.6, 0.6);
-      frc.robot.RobotContainer.DrivetrainT.tankDrive(output, 0.6);
-    }
+    frc.robot.RobotContainer.DrivetrainT.arcadeDrive(MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage(), m_distance), -0.4, 0.4), 0/*frc.robot.RobotContainer.NavxT.getHeading() * 0.1*/);
+    SmartDashboard.putNumber("Off", frc.robot.RobotContainer.DrivetrainT.getEncoderAverage());
   }
 
   // Called once the command ends or is interrupted.
@@ -69,6 +57,6 @@ public class DriveArc extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage()) >= m_radius * Math.PI * 2 * Math.abs(m_angle)/360;
+    return pid.atSetpoint();
   }
 }

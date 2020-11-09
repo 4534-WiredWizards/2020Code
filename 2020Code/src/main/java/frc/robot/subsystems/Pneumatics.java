@@ -25,4 +25,11 @@ public class Pneumatics extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public void setCompressor(boolean set){
+    if(set)
+    compressor.start();
+    else
+    compressor.stop();
+  }
 }
