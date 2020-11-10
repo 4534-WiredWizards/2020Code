@@ -25,7 +25,7 @@ public class Drivetrain extends SubsystemBase {
   private CANEncoder rightFollowerEncoder1;
   private CANSparkMax rightFollower2;
   private CANEncoder rightFollowerEncoder2;
-  
+
   private CANSparkMax leftMaster;
   private CANEncoder leftMasterEncoder;
   private CANSparkMax leftFollower1;
@@ -49,7 +49,7 @@ public class Drivetrain extends SubsystemBase {
   //Direct driving varibles
   boolean drivingEnabled = true;
   double encoderFactor = 268/182.1;
-  
+
   /**
    * Creates a new ExampleSubsystem.
    */
@@ -81,7 +81,7 @@ public class Drivetrain extends SubsystemBase {
     leftMasterEncoder.setPositionConversionFactor(encoderFactor);
     leftMasterEncoder.setVelocityConversionFactor(encoderFactor);
     leftMaster.setOpenLoopRampRate(0.1);
-    
+
     leftFollower1 = new CANSparkMax(14, MotorType.kBrushless);
     leftFollower1.setInverted(true);
     leftFollowerEncoder1 = leftFollower1.getEncoder();
@@ -95,13 +95,13 @@ public class Drivetrain extends SubsystemBase {
     leftFollowerEncoder2.setPositionConversionFactor(encoderFactor);
     leftFollowerEncoder2.setVelocityConversionFactor(encoderFactor);
     leftFollower2.setOpenLoopRampRate(0.1);
-    
+
 
     leftFollower1.follow(leftMaster);
     leftFollower2.follow(leftMaster);
     rightFollower1.follow(rightMaster);
     rightFollower2.follow(rightMaster);
-    
+
     diffDrive = new DifferentialDrive(leftMaster, rightMaster);
     addChild("DiffDrive", diffDrive);
     diffDrive.setSafetyEnabled(false);
@@ -136,11 +136,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void setDemoMode(boolean newDemoMode) {
     demoMode = newDemoMode;
-    if (demoMode == true) {
-        maxSpeed = demoSpeed;
-    } else {
-        maxSpeed = workingSpeed;
-    }
+    maxSpeed = demoMode ? demoSpeed : workingSpeed;
     return;
   }
 

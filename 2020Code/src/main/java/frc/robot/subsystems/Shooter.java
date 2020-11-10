@@ -42,7 +42,7 @@ public class Shooter extends SubsystemBase {
     Shoot2.follow(Shoot1);
     Shoot2.setInverted(false);
     Hood.setBounds(2.0, 1.8, 1.5, 1.2, 1.0);
-    //Turret.setOpenLoopRampRate(5);
+    // Turret.setOpenLoopRampRate(5);
   }
 
   @Override

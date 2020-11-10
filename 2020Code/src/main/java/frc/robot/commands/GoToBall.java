@@ -55,11 +55,14 @@ public class GoToBall extends CommandBase {
     if (size < 120) {
         speed = (float)0.6;
     }
+
+    // Annoying old programmer thinks frc.robot.RobotContainer.BallLimelightT.limelightHasTarget() should be stored in a temp variable.
+    
     //Go to cone if it is there
     if(frc.robot.RobotContainer.BallLimelightT.limelightHasTarget()) {
       frc.robot.RobotContainer.DrivetrainT.arcadeDrive(speed, rotation);
     }
-    //if the cone isnt there, but we are in follow offscreen mode, 
+    //if the cone isnt there, but we are in follow offscreen mode,
     //and the cone was most recently at an angle near the edge, turn in that direction without moving forward.
     if(followOffscreen) {
         if(lastKnownPosition < -15 && !frc.robot.RobotContainer.BallLimelightT.limelightHasTarget()) frc.robot.RobotContainer.DrivetrainT.arcadeDrive(0, -0.5);

@@ -14,10 +14,10 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 
 public class BallLimelight extends SubsystemBase {
   /**
-   * Creates a new ExampleSubsystem.
+   * Creates a new LimeLight object that borkborkbork
    */
-  public BallLimelight() {
 
+  public BallLimelight() {
   }
 
   @Override
@@ -25,37 +25,31 @@ public class BallLimelight extends SubsystemBase {
     // This method will be called once per scheduler run
   }
   protected NetworkTable limeTable = NetworkTableInstance.getDefault().getTable("limelight");
-    
-    //Has target
+
+    // Has target
     protected NetworkTableEntry tv = limeTable.getEntry("tv");
-    //Horizontal Offset
+    // Horizontal Offset
     protected NetworkTableEntry tx = limeTable.getEntry("tx");
-    //Vertical Offset
+    // Vertical Offset
     protected NetworkTableEntry ty = limeTable.getEntry("ty");
-    //Amount of 
+    // Amount of
     protected NetworkTableEntry ta = limeTable.getEntry("ta");
-    //Skew
+    // Skew
     protected NetworkTableEntry ts = limeTable.getEntry("ts");
-    //Latency
+    // Latency
     protected NetworkTableEntry tl = limeTable.getEntry("tl");
-    //Short side of blue box
+    // Short side of blue box
     protected NetworkTableEntry tshort = limeTable.getEntry("tshort");
-    //Long side of blue box
+    // Long side of blue box
     protected NetworkTableEntry tlong = limeTable.getEntry("tlong");
-    //Horizontal of yellow box
+    // Horizontal of yellow box
     protected NetworkTableEntry thor = limeTable.getEntry("thor");
-    //Vertical of yellow box
+    // Vertical of yellow box
     protected NetworkTableEntry tvert = limeTable.getEntry("tvert");
 
     public void setLEDMode(double mode) {
-        if (mode == 0 && getLEDMode() != 0) {
-            limeTable.getEntry("ledMode").setNumber(0);
-        } else if (mode == 1 && getLEDMode() != 1) {
-            limeTable.getEntry("ledMode").setNumber(1);
-        } else if (mode == 2 && getLEDMode() != 2) {
-            limeTable.getEntry("ledMode").setNumber(2);
-        } else if (mode == 3 && getLEDMode() != 3) {
-            limeTable.getEntry("ledMode").setNumber(3);
+        if (mode >= 0 && mode <= 3 && mode != getLEDMode()) {
+            limeTable.getEntry("ledMode").setNumber(mode);
         }
     }
 
@@ -63,40 +57,51 @@ public class BallLimelight extends SubsystemBase {
 		final double LEDMode = limeTable.getEntry("ledMode").getDouble(1);
 		return LEDMode;
     }
+
     /*private void debugLimeLED() {
         System.out.println(limeTable.getEntry("ledMode").getDouble(1));
     }*/
+
     public double getXSkew() {
         return tx.getDouble(0);
     }
+
     public double getYSkew() {
         return ty.getDouble(0);
     }
+
     public boolean limelightHasTarget() {
-        if(tv.getDouble(0) == 1.0) return true;
-        else return false;
+        return tv.getDouble(0) == 1.0;
     }
+
     public double getAreaPercent() {
         return ta.getDouble(0);
     }
+
     public double getArea() {
         return (ta.getDouble(0) / 100) * 76800;
     }
+
     public double getLatency() {
         return tl.getDouble(0);
     }
+
     public double getBlueBoxLong() {
         return tlong.getDouble(0);
     }
+
     public double getBlueBoxShort() {
         return tshort.getDouble(0);
     }
+
     public double getYellowBoxHorizontal() {
         return thor.getDouble(0);
     }
+
     public double getYellowBoxVertical() {
         return tvert.getDouble(0);
     }
+
     public void setPipeline(int pipeline) {
         limeTable.getEntry("pipeline").setNumber(pipeline);
     }

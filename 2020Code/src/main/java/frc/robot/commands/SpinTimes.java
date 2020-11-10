@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class SpinTimes extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   int detected = -1;
-  int lastDetected = -2; 
+  int lastDetected = -2;
   int colorChanges = 0;
 
   /**
@@ -40,16 +40,22 @@ public class SpinTimes extends CommandBase {
   @Override
   public void execute() {
     frc.robot.RobotContainer.DiskControlT.DiskMotorController(0.25);
-    if (frc.robot.RobotContainer.DiskControlT.senseColor().blue > frc.robot.RobotContainer.DiskControlT.senseColor().green && frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().red || frc.robot.RobotContainer.DiskControlT.senseColor().blue > 0.27) detected =2;
-    else if (frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().blue && frc.robot.RobotContainer.DiskControlT.senseColor().blue > frc.robot.RobotContainer.DiskControlT.senseColor().red) detected = 3;
-    else if (frc.robot.RobotContainer.DiskControlT.senseColor().red > frc.robot.RobotContainer.DiskControlT.senseColor().green && frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().blue || frc.robot.RobotContainer.DiskControlT.senseColor().green < 0.5) detected = 0;
-    else if (frc.robot.RobotContainer.DiskControlT.senseColor().green > frc.robot.RobotContainer.DiskControlT.senseColor().red && frc.robot.RobotContainer.DiskControlT.senseColor().red > frc.robot.RobotContainer.DiskControlT.senseColor().blue) detected = 1;
+    Color hue = frc.robot.RobotContainer.DiskControlT.senseColor();
+    if (hue.blue > hue.green && hue.green > hue.red || hue.blue > 0.27)
+        detected =2;
+    else if (hue.green > hue.blue && hue.blue > hue.red)
+        detected = 3;
+    else if (hue.red > hue.green && hue.green > hue.blue || hue.green < 0.5)
+        detected = 0;
+    else if (hue.green > hue.red && hue.red > hue.blue)
+        detected = 1;
+
     if (lastDetected != detected) {
         colorChanges ++;
         lastDetected = detected;
     }
   }
-  
+
 
   // Called once the command ends or is interrupted.
   @Override

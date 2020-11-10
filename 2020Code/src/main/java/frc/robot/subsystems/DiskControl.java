@@ -45,19 +45,24 @@ public class DiskControl extends SubsystemBase {
   @Override
   public void periodic() {
     if(DebugConstants.debugMode) {
-      Color detectedColor = m_colorSensor.getColor();
-      SmartDashboard.putNumber("Red", detectedColor.red);
-      SmartDashboard.putNumber("Green", detectedColor.green);
-      SmartDashboard.putNumber("Blue", detectedColor.blue);
-      if (detectedColor.blue > detectedColor.green && detectedColor.green > detectedColor.red || detectedColor.blue > 0.27) SmartDashboard.putString("DetectedColor", "Blue");
-      else if (detectedColor.green > detectedColor.blue && detectedColor.blue > detectedColor.red) SmartDashboard.putString("DetectedColor", "Green");
-      else if (detectedColor.red > detectedColor.green && detectedColor.green > detectedColor.blue || detectedColor.green < 0.5) SmartDashboard.putString("DetectedColor", "Red");
-      else if (detectedColor.green > detectedColor.red && detectedColor.red > detectedColor.blue) SmartDashboard.putString("DetectedColor", "Yellow");
+      Color hue = m_colorSensor.getColor();
+      SmartDashboard.putNumber("Red", hue.red);
+      SmartDashboard.putNumber("Green", hue.green);
+      SmartDashboard.putNumber("Blue", hue.blue);
+      if (hue.blue > hue.green && hue.green > hue.red || hue.blue > 0.27)
+        SmartDashboard.putString("DetectedColor", "Blue");
+      else if (hue.green > hue.blue && hue.blue > hue.red)
+        SmartDashboard.putString("DetectedColor", "Green");
+      else if (hue.red > hue.green && hue.green > hue.blue || hue.green < 0.5)
+        SmartDashboard.putString("DetectedColor", "Red");
+      else if (hue.green > hue.red && hue.red > hue.blue)
+        SmartDashboard.putString("DetectedColor", "Yellow");
     }
   }
+
   public Color senseColor(){
     return m_colorSensor.getColor();
-  
+
   }
   public void DiskMotorController(double speed){
     diskWheel.set(ControlMode.PercentOutput, speed);
