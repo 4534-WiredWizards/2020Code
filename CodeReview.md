@@ -159,7 +159,7 @@ public void execute() {
   frc.robot.RobotContainer.DiskControlT.DiskMotorController(0.25);
   Color hue = frc.robot.RobotContainer.DiskControlT.senseColor();
   if (hue.blue > hue.green && hue.green > hue.red || hue.blue > 0.27)
-      detected =2;
+      detected = 2;
   else if (hue.green > hue.blue && hue.blue > hue.red)
       detected = 3;
   else if (hue.red > hue.green && hue.green > hue.blue || hue.green < 0.5)
@@ -173,6 +173,7 @@ public void execute() {
   }
 }
 ```
+Also, the above code has a bug in it. Can you find it?
 
 * Additionally, you're repeating the color detection algorithm in two places. Better to do it once, in DiskControl where you are doing the actual sensing, and provide the result as an Enum. That way, you don't have to remember to change the code in two places.
 
