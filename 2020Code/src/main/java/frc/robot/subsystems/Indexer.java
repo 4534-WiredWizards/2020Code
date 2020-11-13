@@ -9,15 +9,17 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.*;
+//import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+//import com.ctre.phoenix.motorcontrol.*;
+import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Indexer extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
-  TalonSRX indexMotor = new TalonSRX(20);
+  //TalonSRX indexMotor = new TalonSRX(20);
+  PWMTalonSRX indexMotor = new PWMTalonSRX(0);
   DigitalInput indexerSensor = new DigitalInput(5);
   public Indexer() {
   }
@@ -29,7 +31,8 @@ public class Indexer extends SubsystemBase {
   }
 
   public void setMotor(double speed){
-    indexMotor.set(ControlMode.PercentOutput, speed);
+    //indexMotor.set(ControlMode.PercentOutput, speed);
+    indexMotor.set(speed);
   }
 
   public boolean ballAtEnd(){

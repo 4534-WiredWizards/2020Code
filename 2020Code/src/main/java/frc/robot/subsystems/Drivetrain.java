@@ -8,9 +8,13 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+//import com.revrobotics.CANSparkMax;
+//import com.revrobotics.CANEncoder;
+//import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import net.thefletcher.revrobotics.CANSparkMax;
+import net.thefletcher.revrobotics.CANEncoder;
+//import net.thefletcher.revrobotics.CANSparkMaxLowLevel;
+import net.thefletcher.revrobotics.enums.MotorType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;

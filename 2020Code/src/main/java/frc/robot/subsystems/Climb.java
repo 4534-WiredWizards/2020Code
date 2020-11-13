@@ -9,14 +9,16 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Solenoid;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 
 public class Climb extends SubsystemBase {
   /**
    * Creates a new ExampleSubsystem.
    */
   private Solenoid piston;
-  WPI_VictorSPX Winch = new WPI_VictorSPX(21);
+  //WPI_VictorSPX Winch = new WPI_VictorSPX(21);
+  PWMVictorSPX Winch = new PWMVictorSPX(1);
   public Climb() {
     piston = new Solenoid(0, 2);
     addChild("piston", piston);
