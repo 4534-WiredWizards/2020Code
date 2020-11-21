@@ -55,6 +55,7 @@ public class DriveWithJoystick extends CommandBase {
         if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) > 0.1) frc.robot.RobotContainer.DrivetrainT.arcadeDrive(speed, rotation);
         if (Math.abs(frc.robot.RobotContainer.m_driverController.getTriggerAxis(Hand.kRight)) < 0.1) frc.robot.RobotContainer.DrivetrainT.arcadeDrive(-speed, rotation);
     }
+    
   }
 
   // Called once the command ends or is interrupted.
