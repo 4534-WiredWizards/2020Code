@@ -42,6 +42,7 @@ public class DriveArc extends CommandBase {
     frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
     frc.robot.RobotContainer.DrivetrainT.resetEncoders();
     output = 0.6 / (m_radius+wheelDistance/2) * (m_radius-wheelDistance/2);
+    System.out.println("hello world");
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -64,6 +65,7 @@ public class DriveArc extends CommandBase {
   public void end(boolean interrupted) {
     frc.robot.RobotContainer.DrivetrainT.arcadeDrive(0,0);
     frc.robot.RobotContainer.DrivetrainT.allowDrive(true);
+    System.out.println("goodbye world");
   }
 
   // Returns true when the command should end.

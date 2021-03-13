@@ -23,6 +23,7 @@ public class DriveDistance extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
+  double speed = 0.4;
   double m_distance = 0;
   PIDController pid = new PIDController(0.05, 0.005, 0);
   public DriveDistance(double distance) {
@@ -34,7 +35,7 @@ public class DriveDistance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    pid.setTolerance(2, 10);
+    pid.setTolerance(5, .4);
     frc.robot.RobotContainer.DrivetrainT.allowDrive(false);
     frc.robot.RobotContainer.DrivetrainT.resetEncoders();
     frc.robot.RobotContainer.NavxT.resetHeading();
