@@ -25,7 +25,7 @@ public class DriveDistance extends CommandBase {
    */
   double speed = 0.4;
   double m_distance = 0;
-  PIDController pid = new PIDController(0.05, 0.005, 0);
+  PIDController pid = new PIDController(0.05, 0, 0);
   public DriveDistance(double distance) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(frc.robot.RobotContainer.DrivetrainT);

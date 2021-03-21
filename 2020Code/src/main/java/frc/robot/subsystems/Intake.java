@@ -29,7 +29,7 @@ public class Intake extends SubsystemBase {
   public void periodic() {
   }
   public void setMotor(double speed){
-    motor.set(speed);
+    motor.set(-speed/2);
   }
   public void setPiston(boolean state){
     piston.set(state);

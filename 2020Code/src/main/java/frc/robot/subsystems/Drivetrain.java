@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivetrain extends SubsystemBase {
   private CANSparkMax rightMaster;
@@ -49,7 +50,7 @@ public class Drivetrain extends SubsystemBase {
   double rotationScale = 0;
   //Direct driving varibles
   boolean drivingEnabled = true;
-  double encoderFactor = 268/182.1;  
+  double encoderFactor = 202/141.441;  
   /**
    * Creates a new ExampleSubsystem.
    */
@@ -123,6 +124,8 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_odometry.update(Rotation2d.fromDegrees(frc.robot.RobotContainer.NavxT.getHeading()), getLeftEncoders(), getRightEncoders());
+    SmartDashboard.putNumber("Right Master Encoder", rightMasterEncoder.getPosition());
+    SmartDashboard.putNumber("Left Master Encoder", leftMasterEncoder.getPosition());
   }
 
   public void arcadeDrive(double speed, double rotation) {

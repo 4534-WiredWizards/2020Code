@@ -50,12 +50,12 @@ public class DriveArc extends CommandBase {
   public void execute() {
     if(m_angle > 0){
       target = (frc.robot.RobotContainer.DrivetrainT.getLeftVelocity() / (m_radius + (wheelDistance/2))) * (m_radius - (wheelDistance/2));
-      output += MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getRightVelocity(),target), -0.6, 0.6);
+      //output += MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getRightVelocity(),target), -0.6, 0.6);
       frc.robot.RobotContainer.DrivetrainT.tankDrive(0.6, output);
     }
     else{
       target = (frc.robot.RobotContainer.DrivetrainT.getRightVelocity() / (m_radius + (wheelDistance/2))) * (m_radius - (wheelDistance/2));
-      output += MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getLeftVelocity(), target), -0.6, 0.6);
+      //output += MathUtil.clamp(pid.calculate(frc.robot.RobotContainer.DrivetrainT.getLeftVelocity(), target), -0.6, 0.6);
       frc.robot.RobotContainer.DrivetrainT.tankDrive(output, 0.6);
     }
   }
