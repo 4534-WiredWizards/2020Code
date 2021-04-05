@@ -19,9 +19,9 @@ public class AutoTest3 extends SequentialCommandGroup {
     public AutoTest3() {
         addCommands(
            new DriveArc(35, -90), //90 degree circle counterclowise
-           new DriveArc(10,170), //170 degrees clockwise
+           new TurnAngle(170), //170 degrees clockwise
            new DriveDistance(65), //drive forward 65 inches
-           new DriveArc(30, -180), //180 degrees counterclockwise
+           new DriveArc(40, -180), //180 degrees counterclockwise
            new DriveDistance(65), //drive forward 65 inches
            new TurnAngle(180), //Turn 180 degrees
            new DriveDistance(65), //drive forward 65 inches
