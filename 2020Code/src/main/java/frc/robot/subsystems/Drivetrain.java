@@ -124,8 +124,11 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     m_odometry.update(Rotation2d.fromDegrees(frc.robot.RobotContainer.NavxT.getHeading()), getLeftEncoders(), getRightEncoders());
-    SmartDashboard.putNumber("Right Master Encoder", rightMasterEncoder.getPosition());
-    SmartDashboard.putNumber("Left Master Encoder", leftMasterEncoder.getPosition());
+//    SmartDashboard.putNumber("Right Master Encoder", rightMasterEncoder.getPosition());
+//    SmartDashboard.putNumber("Left Master Encoder", leftMasterEncoder.getPosition());
+    SmartDashboard.putNumber("Right Master Encoder", getRightEncoders());
+    SmartDashboard.putNumber("Left Master Encoder", getLeftEncoders());
+    SmartDashboard.putNumber("Average Encoder", getEncoderAverage());
   }
 
   public void arcadeDrive(double speed, double rotation) {
@@ -147,6 +150,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public double getRightEncoders() {
+    //return ((rightMasterEncoder.getPosition() + rightFollowerEncoder1.getPosition() + rightFollowerEncoder2.getPosition())/3);
     return ((-rightMasterEncoder.getPosition() - rightFollowerEncoder1.getPosition() - rightFollowerEncoder2.getPosition())/3);
   }
 
@@ -158,8 +162,10 @@ public class Drivetrain extends SubsystemBase {
     return drivingEnabled;
   }
   public double getEncoderAverage() {
-    return (getRightEncoders() + getLeftEncoders() / 2);
+    return ((getRightEncoders() + getLeftEncoders()) / 2);
+ 
   }
+
   public void resetEncoders() {
     leftFollowerEncoder2.setPosition(0);
     leftFollowerEncoder1.setPosition(0);

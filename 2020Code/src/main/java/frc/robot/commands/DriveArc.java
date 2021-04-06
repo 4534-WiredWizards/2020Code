@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpiutil.math.MathUtil;
+//import edu.wpi.first.wpiutil.math.MathUtil;
 
 /**
  * An example command that uses an example subsystem.
@@ -24,6 +24,7 @@ public class DriveArc extends CommandBase {
    */
   double m_radius = 0;
   double m_angle = 0;
+  int donecount = 0;
   double wheelDistance = 21.0;
   double output;
   double target;
@@ -71,6 +72,17 @@ public class DriveArc extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage()) >= m_radius * Math.PI * 2 * Math.abs(m_angle)/360;
+    if ( Math.abs(frc.robot.RobotContainer.DrivetrainT.getEncoderAverage()) >= m_radius * Math.PI * 2 * Math.abs(m_angle)/360) {
+      donecount++;
+    }
+    else {
+      donecount = 0;
+    }
+    if (donecount > 2) {
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }

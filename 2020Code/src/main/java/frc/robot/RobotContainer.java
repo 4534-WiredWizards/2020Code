@@ -80,6 +80,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new AutoTest(); //.withTimeout(20);
+    return new AutoTest2(); //.withTimeout(20);
   }
 }

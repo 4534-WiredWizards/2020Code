@@ -19,7 +19,7 @@ public class AutoTest extends SequentialCommandGroup {
   public AutoTest() {
     addCommands(
       //new DriveDistance(150), //move forward first step
-      new DriveArc(30, 180)
+      new DriveArc(55,-90)
       //new TurnAngle(90), //turn right 90 degrees 
 
       // new DriveDistance(50), //move forward 
