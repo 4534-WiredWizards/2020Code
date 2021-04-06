@@ -18,7 +18,7 @@ public class BarrelRunTest extends SequentialCommandGroup {
     public BarrelRunTest() {
         addCommands(
                 new DriveDistance(90), //move forward 7.5 feet
-                new DriveArc(30, 360), //do a full circle clockwise
+                new DriveArc(30, 340), //do a full circle clockwise
                 new DriveDistance(90), //move forward 90 inches
                 new DriveArc(40, -315), //rotate 315 degrees counterclockwise
                 new DriveDistance(85), //move forward 85 inches
