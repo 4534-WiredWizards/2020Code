@@ -17,16 +17,16 @@ public class AutoTest2 extends SequentialCommandGroup {
     public static final double DriveDist = 125; //scale 106%
   
     public AutoTest2() {
-        addCommands(
-            new DriveArc(55, -68), //90 degree circle counterclockwise
-            new DriveArc(15, 73), //90 degree circle clockwise
-            new DriveDistance(100), //move forward 125 inches
-            new DriveArc(45, 80),  //90 degree circle clockwise
-            new DriveArc(45, 320), //full circle 360 degrees 
-            new DriveArc(75, -90), //90 degree circle counterclockwise
-            new DriveDistance(100), //move forward 125 inches
-            new DriveArc(15, 73), //90 degree circle clockwise
-            new DriveArc(55, -68)  //90 degree circle counterclockwise
-            ); 
-        }   
-    }
+      addCommands(
+          new DriveArc(55, -90), //90 degree circle counterclockwise
+          new DriveArc(15, 80), //90 degree circle clockwise
+          new DriveDistance(120), //move forward 125 inches
+          new DriveArc(35, 85),  //90 degree circle clockwise
+          new DriveArc(45, -360), //full circle 360 degrees 
+          new DriveArc(35, 80), //90 degree circle counterclockwise
+          new DriveDistance(125), //move forward 125 inches
+          new DriveArc(15, 80), //90 degree circle clockwise
+          new DriveArc(45, -90)  //90 degree circle counterclockwise
+          ); 
+      }   
+  }

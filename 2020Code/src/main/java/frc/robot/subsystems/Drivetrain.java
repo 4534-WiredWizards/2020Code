@@ -50,7 +50,8 @@ public class Drivetrain extends SubsystemBase {
   double rotationScale = 0;
   //Direct driving varibles
   boolean drivingEnabled = true;
-  double encoderFactor = 202/141.441;  
+  //double encoderFactor = 202/141.441;  
+  double encoderFactor = 268.5/125.650192261;  
   /**
    * Creates a new ExampleSubsystem.
    */
@@ -126,9 +127,22 @@ public class Drivetrain extends SubsystemBase {
     m_odometry.update(Rotation2d.fromDegrees(frc.robot.RobotContainer.NavxT.getHeading()), getLeftEncoders(), getRightEncoders());
 //    SmartDashboard.putNumber("Right Master Encoder", rightMasterEncoder.getPosition());
 //    SmartDashboard.putNumber("Left Master Encoder", leftMasterEncoder.getPosition());
-    SmartDashboard.putNumber("Right Master Encoder", getRightEncoders());
-    SmartDashboard.putNumber("Left Master Encoder", getLeftEncoders());
-    SmartDashboard.putNumber("Average Encoder", getEncoderAverage());
+SmartDashboard.putNumber("LMainEnc", leftMasterEncoder.getPosition());
+SmartDashboard.putNumber("RMainEnc", rightMasterEncoder.getPosition());
+SmartDashboard.putNumber("LF1Enc", leftFollowerEncoder1.getPosition());
+SmartDashboard.putNumber("RF1Enc", rightFollowerEncoder1.getPosition());
+SmartDashboard.putNumber("LF2Enc", leftFollowerEncoder2.getPosition());
+SmartDashboard.putNumber("RF2Enc", rightFollowerEncoder2.getPosition());
+SmartDashboard.putNumber("LMainEnc Ratio", leftMasterEncoder.getPositionConversionFactor());
+SmartDashboard.putNumber("RMainEnc Ratio", rightMasterEncoder.getPositionConversionFactor());
+SmartDashboard.putNumber("LF1Enc Ratio", leftFollowerEncoder1.getPositionConversionFactor());
+SmartDashboard.putNumber("RF1Enc Ratio", rightFollowerEncoder1.getPositionConversionFactor());
+SmartDashboard.putNumber("LF2Enc Ratio", leftFollowerEncoder2.getPositionConversionFactor());
+SmartDashboard.putNumber("RF2Enc Ratio", rightFollowerEncoder2.getPositionConversionFactor());
+SmartDashboard.putNumber("getLeftEncoders", getLeftEncoders());
+SmartDashboard.putNumber("getRightEncoders", getRightEncoders());
+SmartDashboard.putNumber("Avg Encoders", getEncoderAverage());
+
   }
 
   public void arcadeDrive(double speed, double rotation) {
